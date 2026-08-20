@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<!--
+  МИНИ-АПП — стиль: классический рабочий стол Windows XP (Luna Blue)
+
+  Настройка и деплой — как в предыдущих версиях:
+  1. Отредактируйте CONFIG ниже.
+  2. Захостите файл (GitHub Pages / Vercel / Netlify).
+  3. Вставьте ссылку в BotFather → Bot Settings → Menu Button.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Опрос.exe</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root{
+    --sky-top:#2f7fe0; --sky-mid:#6fb8f2; --sky-low:#bfe3fb;
+    --hill-back:#5db14a; --hill-front:#3a9130;
+    --xp-blue-1:#4a9bff; --xp-blue-2:#1461e0; --xp-blue-3:#0b3f9e;
+    --xp-body:#ece9d8; --xp-menu-hover:#316ac5;
+    --xp-border:#0a3a8f;
+    --text-dark:#1c1c1c; --text-muted:#5c5c5c;
+    --accent-1:#3a86ff; --accent-2:#1f4fd6;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; overflow-x:hidden;}
+  body{
+    min-height:100vh; position:relative;
+    background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-low) 78%);
+    font-family:Tahoma,Verdana,'Segoe UI',sans-serif;
+    padding-bottom:50px;
+  }
+
+  .cloud{position:absolute; background:#fff; border-radius:50px; opacity:.9;}
+  .cloud::before,.cloud::after{content:''; position:absolute; background:#fff; border-radius:50%;}
+  .cloud-1{top:6%; left:8%; width:70px; height:22px;}
+  .cloud-1::before{width:34px; height:34px; top:-16px; left:8px;}
+  .cloud-1::after{width:26px; height:26px; top:-10px; left:36px;}
+  .cloud-2{top:13%; right:12%; width:54px; height:18px;}
+  .cloud-2::before{width:26px; height:26px; top:-12px; left:6px;}
+  .cloud-2::after{width:20px; height:20px; top:-8px; left:28px;}
+
+  .hill{position:absolute; bottom:0; left:0; width:100%;}
+  .hill-back{height:22vh; background:var(--hill-back); clip-path:polygon(0 55%,20% 30%,50% 48%,75% 20%,100% 42%,100% 100%,0 100%);}
+  .hill-front{height:13vh; background:var(--hill-front); clip-path:polygon(0 65%,25% 38%,55% 58%,80% 30%,100% 50%,100% 100%,0 100%);}
+
+  .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:0 1px 2px rgba(0,0,0,.7); z-index:2;}
+  .icon-shape{width:36px; height:30px; margin:0 auto 4px;}
+  .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c); border-radius:2px; position:relative;}
+  .icon-docs::before{content:''; position:absolute; top:-6px; left:0; width:16px; height:6px; background:#f2c94c; border-radius:2px 2px 0 0;}
+  .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); position:relative;}
+  .icon-bin::before{content:''; position:absolute; top:-4px; left:-10%; width:120%; height:5px; background:#a9b7c6; border-radius:2px;}
+  .di-1{top:18px; left:12px;}
+  .di-2{top:104px; left:12px;}
+
+  .wrap{
+    position:relative; z-index:3; max-width:420px; margin:0 auto;
+    padding:calc(30px + env(safe-area-inset-top)) 16px 20px;
+    display:flex; align-items:center; min-height:calc(100vh - 50px);
+  }
+  .window{
+    width:100%; border-radius:9px 9px 3px 3px; overflow:hidden;
+    border:1px solid var(--xp-border); box-shadow:0 18px 44px rgba(0,0,0,.45);
+    transition:transform .12s ease;
+  }
+  .window.shake{animation:shake .4s;}
+  @keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-6px);} 40%{transform:translateX(6px);} 60%{transform:translateX(-4px);} 80%{transform:translateX(4px);} }
+
+  .titlebar{
+    position:relative; height:32px; display:flex; align-items:center; gap:6px; padding:0 6px;
+    background:linear-gradient(180deg,var(--xp-blue-1) 0%,var(--xp-blue-2) 55%,var(--xp-blue-3) 100%);
+  }
+  .titlebar::before{content:''; position:absolute; top:1px; left:0; right:0; height:2px; background:rgba(255,255,255,.55);}
+  .title-icon{width:15px; height:15px; border-radius:3px; background:linear-gradient(135deg,#ffe27a,#f2a93c); flex-shrink:0; box-shadow:0 0 0 1px rgba(0,0,0,.2);}
+  .title-text{flex:1; color:#fff; font-size:13px; font-weight:bold; text-shadow:0 1px 1px rgba(0,0,0,.4);}
+  .win-btn{
+    width:20px; height:18px; border-radius:2px; font-size:11px; line-height:1;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:linear-gradient(180deg,#fff,#d7d7d7); border:1px solid #6b8ec4; color:#333;
+  }
+  .win-btn.close{background:linear-gradient(180deg,#f8a3a3,#d64545); color:#fff; border-color:#a33;}
+  .close-hint{
+    position:absolute; right:8px; top:36px; background:#2b2b2b; color:#fff; font-size:11px;
+    padding:4px 8px; border-radius:3px; opacity:0; pointer-events:none; transition:opacity .2s; z-index:5;
+  }
+  .close-hint.show{opacity:1;}
+
+  .menubar{
+    display:flex; gap:14px; padding:4px 10px; background:var(--xp-body);
+    border-bottom:1px solid #aca899; font-size:11px; color:#000;
+  }
+  .menubar span{padding:2px 4px; border-radius:2px;}
+  .menubar span:hover{background:var(--xp-menu-hover); color:#fff;}
+
+  .body{background:var(--xp-body); padding:16px 16px 0;}
+  .eyebrow{margin:0 0 4px; font-size:11px; letter-spacing:.04em; color:var(--text-muted); font-weight:bold;}
+  .question{margin:0 0 16px; font-size:19px; font-weight:bold; color:var(--text-dark); line-height:1.3;}
+
+  .options{display:flex; flex-direction:column; gap:8px;}
+  .option{
+    position:relative; overflow:hidden; width:100%; text-align:left; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:#fff; border:1px solid #7f9db9; border-radius:3px;
+    box-shadow:inset 0 1px 0 #fff; padding:10px 12px;
+  }
+  .option:active{transform:translateY(1px);}
+  .option-fill{
+    position:absolute; inset:0; width:0%; z-index:0;
+    background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); opacity:.9;
+    transition:width 1s cubic-bezier(.16,1,.3,1);
+  }
+  .option-label{position:relative; z-index:1; font-size:13px; color:var(--text-dark);}
+  .option-percent{position:relative; z-index:1; font-size:13px; font-weight:bold; color:#fff; opacity:0; transition:opacity .4s ease .3s;}
+  .options.voted .option{cursor:default;}
+  .options.voted .option-percent{opacity:1;}
+  .option.chosen{border-color:var(--xp-blue-2); border-width:2px;}
+  .leader-tag{font-size:9px; font-weight:bold; color:#fff; margin-left:6px; text-transform:uppercase; opacity:.9;}
+
+  .statusbar{
+    margin:14px -16px 0; padding:6px 12px; font-size:11px; color:var(--text-muted);
+    background:#dcd8c4; border-top:1px solid #b8b49e; box-shadow:inset 0 1px 0 #fff;
+  }
+
+  .taskbar{
+    position:fixed; left:0; right:0; bottom:0; height:42px; z-index:10;
+    display:flex; align-items:center; padding:0 6px; gap:6px;
+    background:linear-gradient(180deg,#3a86ff,#0c3c9b);
+    border-top:2px solid var(--xp-border);
+  }
+  .start-btn{
+    position:relative; overflow:hidden; display:flex; align-items:center; gap:6px; padding:5px 12px 5px 8px;
+    background:linear-gradient(180deg,#5ecb3f,#1f7a0a); border-radius:4px 12px 12px 4px;
+    color:#fff; font-weight:bold; font-size:13px; font-style:italic;
+    box-shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+  .start-btn::before{content:''; position:absolute; top:0; left:0; right:0; height:50%; background:rgba(255,255,255,.28);}
+  .start-icon{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; width:12px; height:12px; gap:1px;}
+  .start-icon span{background:#fff; border-radius:1px;}
+  .taskbar-divider{width:1px; height:26px; background:rgba(255,255,255,.3);}
+  .quick{display:flex; gap:6px;}
+  .quick span{width:20px; height:20px; border-radius:3px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);}
+  .tray{margin-left:auto; display:flex; align-items:center; gap:8px; background:rgba(0,0,0,.2); padding:5px 10px; border-radius:3px 0 0 3px;}
+  .tray-dot{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.5);}
+  .clock{color:#fff; font-size:12px;}
+
+  .confetti-layer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50;}
+  .confetti-piece{position:absolute; top:-12px; width:7px; height:12px; border-radius:1px; animation:confettiFall linear forwards;}
+  @keyframes confettiFall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.15; } }
+  @media (prefers-reduced-motion:reduce){ .confetti-piece{display:none;} }
+</style>
+</head>
+<body>
+
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="hill hill-back"></div>
+<div class="hill hill-front"></div>
+
+<div class="desktop-icon di-1"><div class="icon-shape icon-docs"></div>Мои документы</div>
+<div class="desktop-icon di-2"><div class="icon-shape icon-bin"></div>Корзина</div>
+
+<div class="wrap">
+  <div class="window" id="window">
+    <div class="titlebar">
+      <div class="title-icon"></div>
+      <div class="title-text" id="title-text">Опрос.exe</div>
+      <div class="win-btn">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn close" id="close-btn">×</div>
+    </div>
+    <div class="menubar">
+      <span>Файл</span><span>Правка</span><span>Вид</span><span>Избранное</span><span>Справка</span>
+    </div>
+    <div class="close-hint" id="close-hint">сначала проголосуй :)</div>
+    <div class="body">
+      <p class="eyebrow" id="eyebrow"></p>
+      <h1 class="question" id="question"></h1>
+      <div class="options" id="options"></div>
+      <div class="statusbar" id="total">Готово</div>
+    </div>
+  </div>
+</div>
+
+<div class="taskbar">
+  <div class="start-btn"><div class="start-icon"><span></span><span></span><span></span><span></span></div>Пуск</div>
+  <div class="taskbar-divider"></div>
+  <div class="quick"><span></span><span></span><span></span></div>
+  <div class="tray">
+    <div class="tray-dot"></div>
+    <div class="tray-dot"></div>
+    <div class="clock" id="clock">00:00</div>
+  </div>
+</div>
+
+<div class="confetti-layer" id="confetti"></div>
+
+<script>
+// ============ РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК ============
+const CONFIG = {
+  pollId: 'who-am-i-xp-classic-v1',
+  channelName: '@ваш_канал',
+  question: 'Кем я для вас являюсь?',
+  options: [
+    'Друг',
+    'Возлюбленный',
+    'Знакомый',
+    'Хотите познакомиться',
+    'Ненавидите меня'
+  ]
+};
+// ========================================================
+
+const API = 'https://api.countapi.xyz';
+const VOTE_KEY = 'voted_' + CONFIG.pollId;
+const CHOICE_KEY = 'choice_' + CONFIG.pollId;
+const COLORS = ['#3a86ff', '#1f4fd6', '#5ecb3f', '#f2c94c'];
+
+const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+if (tg) {
+  tg.ready();
+  tg.expand();
+  try { tg.setBackgroundColor('#2f7fe0'); tg.setHeaderColor('#2f7fe0'); } catch(e) {}
+}
+
+document.getElementById('eyebrow').textContent = CONFIG.channelName;
+document.getElementById('question').textContent = CONFIG.question;
+
+const optionsEl = document.getElementById('options');
+const totalEl = document.getElementById('total');
+
+CONFIG.options.forEach((label, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'option';
+  btn.dataset.index = i;
+  btn.innerHTML =
+    '<span class="option-fill"></span>' +
+    '<span class="option-label">' + label + '</span>' +
+    '<span class="option-percent"></span>';
+  btn.addEventListener('click', () => vote(i));
+  optionsEl.appendChild(btn);
+});
+
+function tickClock() {
+  const d = new Date();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  document.getElementById('clock').textContent = hh + ':' + mm;
+}
+tickClock();
+setInterval(tickClock, 15000);
+
+document.getElementById('close-btn').addEventListener('click', () => {
+  if (optionsEl.classList.contains('voted')) return;
+  const win = document.getElementById('window');
+  const hint = document.getElementById('close-hint');
+  win.classList.remove('shake'); void win.offsetWidth; win.classList.add('shake');
+  hint.classList.add('show');
+  if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('warning');
+  setTimeout(() => hint.classList.remove('show'), 1500);
+});
+
+async function getCount(i) {
+  try {
+    const r = await fetch(API + '/get/' + CONFIG.pollId + '/opt' + i);
+    if (!r.ok) return 0;
+    const d = await r.json();
+    return d && d.value ? d.value : 0;
+  } catch(e) { return 0; }
+}
+
+async function hitCount(i) {
+  try {
+    const r = await fetch(API + '/hit/' + CONFIG.pollId + '/opt' + i);
+    const d = await r.json();
+    return d.value;
+  } catch(e) { return null; }
+}
+
+async function renderResults(chosenIndex, knownValue) {
+  optionsEl.classList.add('voted');
+  const counts = await Promise.all(CONFIG.options.map((_, i) =>
+    (i === chosenIndex && knownValue != null) ? Promise.resolve(knownValue) : getCount(i)
+  ));
+  const total = counts.reduce((a, b) => a + b, 0) || 1;
+  const maxCount = Math.max(...counts);
+
+  [...optionsEl.children].forEach((btn, i) => {
+    const pct = Math.round((counts[i] / total) * 100);
+    const fill = btn.querySelector('.option-fill');
+    const percentEl = btn.querySelector('.option-percent');
+    setTimeout(() => { fill.style.width = pct + '%'; }, 60 + i * 60);
+    percentEl.textContent = pct + '%';
+    if (i === chosenIndex) btn.classList.add('chosen');
+    if (counts[i] === maxCount && maxCount > 0) {
+      percentEl.insertAdjacentHTML('beforebegin', '<span class="leader-tag">лидер</span>');
+    }
+  });
+
+  totalEl.textContent = 'Всего голосов: ' + total;
+}
+
+async function vote(index) {
+  if (optionsEl.classList.contains('voted')) return;
+  if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+
+  optionsEl.classList.add('voted');
+  const newValue = await hitCount(index);
+
+  localStorage.setItem(VOTE_KEY, '1');
+  localStorage.setItem(CHOICE_KEY, String(index));
+
+  optionsEl.classList.remove('voted');
+  await renderResults(index, newValue);
+
+  if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  launchConfetti();
+  showShareButton(index);
+}
+
+function showShareButton(index) {
+  if (!tg || !tg.MainButton) return;
+  const text = 'Проголосовал(а) в опросе ' + CONFIG.channelName + ': «' + CONFIG.question +
+    '» — мой ответ: «' + CONFIG.options[index] + '»';
+  tg.MainButton.setText('Поделиться результатом');
+  tg.MainButton.setParams({ color: '#1f4fd6', text_color: '#FFFFFF' });
+  tg.MainButton.show();
+  tg.MainButton.onClick(() => {
+    const url = 'https://t.me/share/url?url=' + encodeURIComponent(location.href) +
+      '&text=' + encodeURIComponent(text);
+    tg.openTelegramLink(url);
+  });
+}
+
+function launchConfetti() {
+  const layer = document.getElementById('confetti');
+  for (let i = 0; i < 36; i++) {
+    const p = document.createElement('span');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
+    p.style.animationDuration = (2.2 + Math.random() * 1.4) + 's';
+    p.style.animationDelay = (Math.random() * 0.3) + 's';
+    layer.appendChild(p);
+    setTimeout(() => p.remove(), 4000);
+  }
+}
+
+if (localStorage.getItem(VOTE_KEY)) {
+  const chosen = parseInt(localStorage.getItem(CHOICE_KEY), 10) || 0;
+  renderResults(chosen, null).then(() => showShareButton(chosen));
+}
+</script>
+</body>
+</html>
