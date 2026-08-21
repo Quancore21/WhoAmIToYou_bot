@@ -11,311 +11,136 @@
     --text-muted:#5c5c5c;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  
   html,body{
-    margin:0; padding:0; overflow-x:hidden; 
-    font-family: Tahoma, "Trebuchet MS", sans-serif;
+    margin:0; padding:0; overflow-x:hidden;
+    font-family:Tahoma,"Trebuchet MS",sans-serif;
   }
-  
   body{
     min-height:100vh; position:relative;
-    /* Оригинальные обои XP с подстраховкой синим цветом */
-    background: #2a5ebf url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') no-repeat center center;
-    background-size: cover;
+    background:#2a5ebf url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') no-repeat center center;
+    background-size:cover;
     padding-bottom:30px;
   }
-
-  .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:1px 1px 2px #000; z-index:2; cursor:pointer;}
-  .icon-shape{width:32px; height:32px; margin:0 auto 4px;}
-  .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c); border-radius:2px; position:relative; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);}
-  .icon-docs::before{content:''; position:absolute; top:-6px; left:0; width:14px; height:6px; background:#f2c94c; border-radius:2px 2px 0 0;}
-  .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); position:relative; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);}
-  .icon-bin::before{content:''; position:absolute; top:-4px; left:-10%; width:120%; height:5px; background:#a9b7c6; border-radius:2px;}
-  .di-1{top:20px; left:20px;}
-  .di-2{top:90px; left:20px;}
-
-  .wrap{
-    position:relative; z-index:3; max-width:420px; margin:0 auto;
-    padding:calc(40px + env(safe-area-inset-top)) 16px 20px;
-    display:flex; align-items:center; min-height:calc(100vh - 30px);
-  }
-  .window{ width:100%; position:relative; transition:transform .12s ease; box-shadow:2px 4px 8px rgba(0,0,0,.5); }
-  .window.shake{animation:shake .4s;}
-  @keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-6px);} 40%{transform:translateX(6px);} 60%{transform:translateX(-4px);} 80%{transform:translateX(4px);} }
-
-  .close-hint{
-    position:absolute; right:8px; top:34px; background:#ffffe1; color:#000; border:1px solid #000; font-size:11px;
-    padding:4px 8px; border-radius:2px; opacity:0; pointer-events:none; transition:opacity .2s; z-index:5;
-    box-shadow:2px 2px 3px rgba(0,0,0,.3);
-  }
-  .close-hint.show{opacity:1;}
-
-  .menubar{
-    display:flex; gap:14px; padding:4px 10px; background:var(--xp-body);
-    border-bottom:1px solid #aca899; font-size:11px; color:#000;
-  }
-  .menubar span{padding:2px 4px; border-radius:2px;}
-  .menubar span:hover{background:var(--xp-menu-hover); color:#fff;}
-
-  .eyebrow{margin:0 0 10px; font-size:11px; color:var(--text-muted); font-weight:bold;}
-  legend{font-size:16px; font-weight:bold;}
-  #vote-error{color:#a33; font-size:11px; margin:4px 0 0; text-align:right; min-height:14px;}
-  #results progress{width:100%; display:block;}
-  .leader-tag{font-size:9px; font-weight:bold; color:#fff; background:#1f7a0a; padding:1px 5px; border-radius:2px; margin-left:4px;}
-
-  .taskbar{
-    position:fixed; left:0; right:0; bottom:0; height:30px; z-index:10;
-    display:flex; align-items:center; gap:6px;
-    background:linear-gradient(to bottom,#245edb 0%,#3f8cf3 9%,#245edb 18%,#245edb 92%,#333 100%);
-    border-top:1px solid #000080;
-  }
-  .start-btn{
-    position:relative; overflow:hidden; display:flex; align-items:center; gap:6px;
-    height:30px; padding:0 14px 0 10px;
-    background:linear-gradient(to bottom,#429f27 0%,#35801e 8%,#2e7118 40%,#1f500d 100%);
-    border-radius:0 10px 10px 0;
-    color:#fff; font-family:'Franklin Gothic Medium','Arial Black',sans-serif; font-style:italic; font-size:14px; font-weight:bold;
-    text-shadow:1px 1px 2px rgba(0,0,0,.7);
-    box-shadow:2px 0 3px rgba(0,0,0,.4);
-    cursor:pointer;
-  }
-  .start-btn:hover{background:linear-gradient(to bottom,#54c933 0%,#409a25 8%,#36851d 40%,#266311 100%);}
-  .start-icon{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; width:14px; height:14px; gap:1px; transform:skewX(-10deg);}
-  .start-icon span{border-radius:1px;}
-  .start-icon span:nth-child(1){background:#f24b26;}
-  .start-icon span:nth-child(2){background:#379c13;}
-  .start-icon span:nth-child(3){background:#0060e8;}
-  .start-icon span:nth-child(4){background:#ffb800;}
-  
-  .quick{display:flex; gap:6px; padding-left:10px;}
-  .quick span{width:16px; height:16px; border-radius:2px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);}
-  .tray{margin-left:auto; display:flex; align-items:center; gap:8px; background:linear-gradient(to bottom,#119ced 0%,#2374d6 9%,#1255be 18%,#1255be 92%,#333 100%); height:30px; padding:0 10px; border-left:1px solid #1042af;}
-  .tray-dot{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.5);}
-  .clock{color:#fff; font-size:11px;}
-
-  .confetti-layer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50;}
-  .confetti-piece{position:absolute; top:-12px; width:7px; height:12px; border-radius:1px; animation:confettiFall linear forwards;}
-  @keyframes confettiFall{ to{ transform:translateY(110vh) rotate(720deg); opacity:.15; } }
-  @media (prefers-reduced-motion:reduce){ .confetti-piece{display:none;} }
+  .desktop-icon{position:absolute;width:64px;text-align:center;color:#fff;font-size:11px;text-shadow:1px 1px 2px #000;z-index:2;cursor:pointer;}
+  .icon-shape{width:32px;height:32px;margin:0 auto 4px;}
+  .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c);border-radius:2px;position:relative;box-shadow:1px 1px 3px rgba(0,0,0,.3);}
+  .icon-docs::before{content:'';position:absolute;top:-6px;left:0;width:14px;height:6px;background:#f2c94c;border-radius:2px 2px 0 0;}
+  .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6);clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);position:relative;box-shadow:1px 1px 3px rgba(0,0,0,.3);}
+  .icon-bin::before{content:'';position:absolute;top:-4px;left:-10%;width:120%;height:5px;background:#a9b7c6;border-radius:2px;}
+  .di-1{top:20px;left:20px}.di-2{top:90px;left:20px}
+  .wrap{position:relative;z-index:3;max-width:420px;margin:0 auto;padding:calc(40px + env(safe-area-inset-top)) 16px 20px;display:flex;align-items:center;min-height:calc(100vh - 30px);}
+  .window{width:100%;position:relative;transition:transform .12s ease;box-shadow:2px 4px 8px rgba(0,0,0,.5);}
+  .window.shake{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  .close-hint{position:absolute;right:8px;top:34px;background:#ffffe1;color:#000;border:1px solid #000;font-size:11px;padding:4px 8px;border-radius:2px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:5;box-shadow:2px 2px 3px rgba(0,0,0,.3);}
+  .close-hint.show{opacity:1}
+  .menubar{display:flex;gap:14px;padding:4px 10px;background:var(--xp-body);border-bottom:1px solid #aca899;font-size:11px;color:#000;}
+  .menubar span{padding:2px 4px;border-radius:2px}.menubar span:hover{background:var(--xp-menu-hover);color:#fff}
+  .eyebrow{margin:0 0 10px;font-size:11px;color:var(--text-muted);font-weight:bold}
+  legend{font-size:16px;font-weight:bold}
+  #vote-error{color:#a33;font-size:11px;margin:4px 0 0;text-align:right;min-height:14px}
+  #results progress{width:100%;display:block}
+  .leader-tag{font-size:9px;font-weight:bold;color:#fff;background:#1f7a0a;padding:1px 5px;border-radius:2px;margin-left:4px}
+  .taskbar{position:fixed;left:0;right:0;bottom:0;height:30px;z-index:10;display:flex;align-items:center;gap:6px;background:linear-gradient(to bottom,#245edb 0%,#3f8cf3 9%,#245edb 18%,#245edb 92%,#333 100%);border-top:1px solid #000080;}
+  .start-btn{position:relative;overflow:hidden;display:flex;align-items:center;gap:6px;height:30px;padding:0 14px 0 10px;background:linear-gradient(to bottom,#429f27 0%,#35801e 8%,#2e7118 40%,#1f500d 100%);border-radius:0 10px 10px 0;color:#fff;font-family:'Franklin Gothic Medium','Arial Black',sans-serif;font-style:italic;font-size:14px;font-weight:bold;text-shadow:1px 1px 2px rgba(0,0,0,.7);box-shadow:2px 0 3px rgba(0,0,0,.4);cursor:pointer;}
+  .start-btn:hover{background:linear-gradient(to bottom,#54c933 0%,#409a25 8%,#36851d 40%,#266311 100%)}
+  .start-icon{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;width:14px;height:14px;gap:1px;transform:skewX(-10deg)}
+  .start-icon span{border-radius:1px}.start-icon span:nth-child(1){background:#f24b26}.start-icon span:nth-child(2){background:#379c13}.start-icon span:nth-child(3){background:#0060e8}.start-icon span:nth-child(4){background:#ffb800}
+  .quick{display:flex;gap:6px;padding-left:10px}.quick span{width:16px;height:16px;border-radius:2px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25)}
+  .tray{margin-left:auto;display:flex;align-items:center;gap:8px;background:linear-gradient(to bottom,#119ced 0%,#2374d6 9%,#1255be 18%,#1255be 92%,#333 100%);height:30px;padding:0 10px;border-left:1px solid #1042af}
+  .tray-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.clock{color:#fff;font-size:11px}
+  .confetti-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}.confetti-piece{position:absolute;top:-12px;width:7px;height:12px;border-radius:1px;animation:confettiFall linear forwards}
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
+  @media (prefers-reduced-motion:reduce){.confetti-piece{display:none}}
 </style>
 </head>
 <body>
-
 <div class="desktop-icon di-1"><div class="icon-shape icon-docs"></div>Мои документы</div>
 <div class="desktop-icon di-2"><div class="icon-shape icon-bin"></div>Корзина</div>
-
 <div class="wrap">
   <div class="window" id="window">
     <div class="title-bar">
       <div class="title-bar-text" id="title-text">Опрос.exe</div>
       <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
-        <button aria-label="Maximize"></button>
-        <button aria-label="Close" id="close-btn"></button>
+        <button aria-label="Minimize"></button><button aria-label="Maximize"></button><button aria-label="Close" id="close-btn"></button>
       </div>
     </div>
-    <div class="menubar">
-      <span>Файл</span><span>Правка</span><span>Вид</span><span>Избранное</span><span>Справка</span>
-    </div>
+    <div class="menubar"><span>Файл</span><span>Правка</span><span>Вид</span><span>Избранное</span><span>Справка</span></div>
     <div class="close-hint" id="close-hint">сначала проголосуй :)</div>
     <div class="window-body">
       <p class="eyebrow" id="eyebrow"></p>
       <fieldset id="poll-fieldset">
         <legend id="question"></legend>
         <div id="radio-list"></div>
-        <section class="field-row" style="justify-content:flex-end; margin-top:12px;">
-          <button id="vote-btn">Проголосовать</button>
-        </section>
+        <section class="field-row" style="justify-content:flex-end;margin-top:12px;"><button id="vote-btn">Проголосовать</button></section>
         <p id="vote-error"></p>
       </fieldset>
       <div id="results" style="display:none;"></div>
     </div>
-    <div class="status-bar">
-      <p class="status-bar-field" id="total">Готово</p>
-    </div>
+    <div class="status-bar"><p class="status-bar-field" id="total">Готово</p></div>
   </div>
 </div>
-
 <div class="taskbar">
   <div class="start-btn"><div class="start-icon"><span></span><span></span><span></span><span></span></div>Пуск</div>
   <div class="quick"><span></span><span></span><span></span></div>
-  <div class="tray">
-    <div class="tray-dot"></div>
-    <div class="tray-dot"></div>
-    <div class="clock" id="clock">00:00</div>
-  </div>
+  <div class="tray"><div class="tray-dot"></div><div class="tray-dot"></div><div class="clock" id="clock">00:00</div></div>
 </div>
-
 <div class="confetti-layer" id="confetti"></div>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-// ============ РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК ============
-const CONFIG = {
-  pollId: 'who-am-i-xp-classic-v3', // Изменил ID, чтобы голоса не смешались со старыми тестами
-  channelName: '@opupevshiy_600321',
-  question: 'Кем я для вас являюсь?',
-  options: [
-    'Друг',
-    'Возлюбленный',
-    'Знакомый',
-    'Хотите познакомиться',
-    'Ненавидите меня'
-  ]
+const CONFIG={
+  pollId:'who-am-i-xp-classic-v3',
+  channelName:'@opupevshiy_600321',
+  question:'Кем я для вас являюсь?',
+  options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Ненавидите меня']
 };
-// ========================================================
-
-const API = 'https://countapi.mileshilliard.com/api/v1';
-const VOTE_KEY = 'voted_' + CONFIG.pollId;
-const CHOICE_KEY = 'choice_' + CONFIG.pollId;
-const COLORS = ['#3a86ff', '#1f4fd6', '#5ecb3f', '#f2c94c'];
-function key(i) { return CONFIG.pollId + '_opt' + i; }
-
-const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-if (tg) {
-  tg.ready();
-  tg.expand();
-  try { tg.setBackgroundColor('#245edb'); tg.setHeaderColor('#245edb'); } catch(e) {}
+const API='https://countapi.mileshilliard.com/api/v1';
+const VOTE_KEY='voted_'+CONFIG.pollId;
+const CHOICE_KEY='choice_'+CONFIG.pollId;
+const COLORS=['#3a86ff','#1f4fd6','#5ecb3f','#f2c94c'];
+function key(i){return CONFIG.pollId+'_opt'+i}
+const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
+if(tg){tg.ready();tg.expand();try{tg.setBackgroundColor('#245edb');tg.setHeaderColor('#245edb')}catch(e){}}
+document.getElementById('eyebrow').textContent=CONFIG.channelName;
+document.getElementById('question').textContent=CONFIG.question;
+const radioList=document.getElementById('radio-list');
+CONFIG.options.forEach((label,i)=>{const row=document.createElement('div');row.className='field-row';row.innerHTML='<input type="radio" name="poll-option" id="opt'+i+'" value="'+i+'"><label for="opt'+i+'">'+label+'</label>';radioList.appendChild(row)});
+const fieldset=document.getElementById('poll-fieldset'),resultsEl=document.getElementById('results'),totalEl=document.getElementById('total'),voteBtn=document.getElementById('vote-btn'),voteError=document.getElementById('vote-error');
+function tickClock(){const d=new Date(),hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');document.getElementById('clock').textContent=hh+':'+mm}
+tickClock();setInterval(tickClock,15000);
+document.getElementById('close-btn').addEventListener('click',e=>{e.preventDefault();if(localStorage.getItem(VOTE_KEY))return;const win=document.getElementById('window'),hint=document.getElementById('close-hint');win.classList.remove('shake');void win.offsetWidth;win.classList.add('shake');hint.classList.add('show');if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('warning');setTimeout(()=>hint.classList.remove('show'),1500)});
+async function getCount(i){try{const r=await fetch(API+'/get/'+key(i));if(!r.ok)return 0;const d=await r.json();return parseInt(d&&d.value,10)||0}catch(e){return 0}}
+async function hitCount(i){try{const r=await fetch(API+'/hit/'+key(i));const d=await r.json();return parseInt(d.value,10)}catch(e){return null}}
+async function renderResults(chosenIndex,knownValue){
+  fieldset.style.display='none';resultsEl.style.display='block';resultsEl.innerHTML='';
+  const counts=await Promise.all(CONFIG.options.map((_,i)=>(i===chosenIndex&&knownValue!=null)?Promise.resolve(knownValue):getCount(i)));
+  const total=counts.reduce((a,b)=>a+b,0)||1,maxCount=Math.max(...counts);
+  CONFIG.options.forEach((label,i)=>{const pct=Math.round(counts[i]/total*100),isLeader=counts[i]===maxCount&&maxCount>0,row=document.createElement('div');row.style.marginBottom='12px';row.innerHTML='<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;"><span>'+label+(i===chosenIndex?' <strong>(ваш ответ)</strong>':'')+(isLeader?'<span class="leader-tag">лидер</span>':'')+'</span><span><strong>'+pct+'%</strong></span></div><progress max="100" value="'+pct+'"></progress>';resultsEl.appendChild(row)});
+  totalEl.textContent='Всего голосов: '+total;
 }
-
-document.getElementById('eyebrow').textContent = CONFIG.channelName;
-document.getElementById('question').textContent = CONFIG.question;
-
-const radioList = document.getElementById('radio-list');
-CONFIG.options.forEach((label, i) => {
-  const row = document.createElement('div');
-  row.className = 'field-row';
-  row.innerHTML =
-    '<input type="radio" name="poll-option" id="opt' + i + '" value="' + i + '">' +
-    '<label for="opt' + i + '">' + label + '</label>';
-  radioList.appendChild(row);
+voteBtn.addEventListener('click',async()=>{
+  const checked=radioList.querySelector('input[name="poll-option"]:checked');
+  if(!checked){voteError.textContent='Сначала выбери вариант';return}
+  voteError.textContent='';const index=parseInt(checked.value,10);
+  if(tg&&tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
+  voteBtn.disabled=true;
+  const newValue=await hitCount(index);
+  localStorage.setItem(VOTE_KEY,'1');localStorage.setItem(CHOICE_KEY,String(index));
+  await renderResults(index,newValue);
+  if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
+  launchConfetti();showShareButton(index);
 });
-
-const fieldset = document.getElementById('poll-fieldset');
-const resultsEl = document.getElementById('results');
-const totalEl = document.getElementById('total');
-const voteBtn = document.getElementById('vote-btn');
-const voteError = document.getElementById('vote-error');
-
-function tickClock() {
-  const d = new Date();
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  document.getElementById('clock').textContent = hh + ':' + mm;
+function showShareButton(index){
+  if(!tg||!tg.MainButton)return;
+  const text='Проголосовал(а) в опросе '+CONFIG.channelName+': «'+CONFIG.question+'» — мой ответ: «'+CONFIG.options[index]+'»';
+  tg.MainButton.setText('Поделиться результатом');tg.MainButton.setParams({color:'#1f4fd6',text_color:'#FFFFFF'});tg.MainButton.show();
+  tg.MainButton.onClick(()=>{const url='https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(text);tg.openTelegramLink(url)});
 }
-tickClock();
-setInterval(tickClock, 15000);
-
-document.getElementById('close-btn').addEventListener('click', (e) => {
-  e.preventDefault();
-  if (localStorage.getItem(VOTE_KEY)) return;
-  const win = document.getElementById('window');
-  const hint = document.getElementById('close-hint');
-  win.classList.remove('shake'); void win.offsetWidth; win.classList.add('shake');
-  hint.classList.add('show');
-  if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('warning');
-  setTimeout(() => hint.classList.remove('show'), 1500);
-});
-
-async function getCount(i) {
-  try {
-    const r = await fetch(API + '/get/' + key(i));
-    if (!r.ok) return 0;
-    const d = await r.json();
-    return parseInt(d && d.value, 10) || 0;
-  } catch(e) { return 0; }
+function launchConfetti(){
+  const layer=document.getElementById('confetti');
+  for(let i=0;i<36;i++){const p=document.createElement('span');p.className='confetti-piece';p.style.left=Math.random()*100+'vw';p.style.background=COLORS[Math.floor(Math.random()*COLORS.length)];p.style.animationDuration=2.2+Math.random()*1.4+'s';p.style.animationDelay=Math.random()*0.3+'s';layer.appendChild(p);setTimeout(()=>p.remove(),4000)}
 }
-
-async function hitCount(i) {
-  try {
-    const r = await fetch(API + '/hit/' + key(i));
-    const d = await r.json();
-    return parseInt(d.value, 10);
-  } catch(e) { return null; }
-}
-
-async function renderResults(chosenIndex, knownValue) {
-  fieldset.style.display = 'none';
-  resultsEl.style.display = 'block';
-  resultsEl.innerHTML = '';
-
-  const counts = await Promise.all(CONFIG.options.map((_, i) =>
-    (i === chosenIndex && knownValue != null) ? Promise.resolve(knownValue) : getCount(i)
-  ));
-  const total = counts.reduce((a, b) => a + b, 0) || 1;
-  const maxCount = Math.max(...counts);
-
-  CONFIG.options.forEach((label, i) => {
-    const pct = Math.round((counts[i] / total) * 100);
-    const isLeader = counts[i] === maxCount && maxCount > 0;
-    const row = document.createElement('div');
-    row.style.marginBottom = '12px';
-    row.innerHTML =
-      '<div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:3px;">' +
-        '<span>' + label + (i === chosenIndex ? ' <strong>(ваш ответ)</strong>' : '') + (isLeader ? '<span class="leader-tag">лидер</span>' : '') + '</span>' +
-        '<span><strong>' + pct + '%</strong></span>' +
-      '</div>' +
-      '<progress max="100" value="' + pct + '"></progress>';
-    resultsEl.appendChild(row);
-  });
-
-  totalEl.textContent = 'Всего голосов: ' + total;
-}
-
-voteBtn.addEventListener('click', async () => {
-  const checked = radioList.querySelector('input[name="poll-option"]:checked');
-  if (!checked) {
-    voteError.textContent = 'Сначала выбери вариант';
-    return;
-  }
-  voteError.textContent = '';
-  const index = parseInt(checked.value, 10);
-
-  if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-  voteBtn.disabled = true;
-
-  const newValue = await hitCount(index);
-  localStorage.setItem(VOTE_KEY, '1');
-  localStorage.setItem(CHOICE_KEY, String(index));
-
-  await renderResults(index, newValue);
-  if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-  launchConfetti();
-  showShareButton(index);
-});
-
-function showShareButton(index) {
-  if (!tg || !tg.MainButton) return;
-  const text = 'Проголосовал(а) в опросе ' + CONFIG.channelName + ': «' + CONFIG.question +
-    '» — мой ответ: «' + CONFIG.options[index] + '»';
-  tg.MainButton.setText('Поделиться результатом');
-  tg.MainButton.setParams({ color: '#1f4fd6', text_color: '#FFFFFF' });
-  tg.MainButton.show();
-  tg.MainButton.onClick(() => {
-    const url = 'https://t.me/share/url?url=' + encodeURIComponent(location.href) +
-      '&text=' + encodeURIComponent(text);
-    tg.openTelegramLink(url);
-  });
-}
-
-function launchConfetti() {
-  const layer = document.getElementById('confetti');
-  for (let i = 0; i < 36; i++) {
-    const p = document.createElement('span');
-    p.className = 'confetti-piece';
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.background = COLORS[Math.floor(Math.random() * COLORS.length)];
-    p.style.animationDuration = (2.2 + Math.random() * 1.4) + 's';
-    p.style.animationDelay = (Math.random() * 0.3) + 's';
-    layer.appendChild(p);
-    setTimeout(() => p.remove(), 4000);
-  }
-}
-
-if (localStorage.getItem(VOTE_KEY)) {
-  const chosen = parseInt(localStorage.getItem(CHOICE_KEY), 10) || 0;
-  renderResults(chosen, null).then(() => showShareButton(chosen));
-}
+if(localStorage.getItem(VOTE_KEY)){const chosen=parseInt(localStorage.getItem(CHOICE_KEY),10)||0;renderResults(chosen,null).then(()=>showShareButton(chosen))}
 </script>
 </body>
 </html>
