@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!--
-  МИНИ-АПП — стиль: 1-в-1 Windows XP (XP.css + доработанная панель задач)
-
-  Настройка и деплой — как в предыдущих версиях:
-  1. Отредактируйте CONFIG в конце файла (перед </body>).
-  2. Захостите файл (GitHub Pages / Vercel / Netlify).
-  3. Вставьте ссылку в BotFather → Bot Settings → Menu Button.
--->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Опрос.exe</title>
@@ -20,20 +12,24 @@
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   
-  html,body{margin:0; padding:0; overflow-x:hidden; font-family:Tahoma,"Trebuchet MS",sans-serif;}
+  html,body{
+    margin:0; padding:0; overflow-x:hidden; 
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+  }
   
   body{
     min-height:100vh; position:relative;
-    background: url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') no-repeat center center;
+    /* Оригинальные обои XP с подстраховкой синим цветом */
+    background: #2a5ebf url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') no-repeat center center;
     background-size: cover;
     padding-bottom:30px;
   }
 
   .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:1px 1px 2px #000; z-index:2; cursor:pointer;}
   .icon-shape{width:32px; height:32px; margin:0 auto 4px;}
-  .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c); border-radius:2px; position:relative;}
+  .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c); border-radius:2px; position:relative; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);}
   .icon-docs::before{content:''; position:absolute; top:-6px; left:0; width:14px; height:6px; background:#f2c94c; border-radius:2px 2px 0 0;}
-  .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); position:relative;}
+  .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); position:relative; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);}
   .icon-bin::before{content:''; position:absolute; top:-4px; left:-10%; width:120%; height:5px; background:#a9b7c6; border-radius:2px;}
   .di-1{top:20px; left:20px;}
   .di-2{top:90px; left:20px;}
@@ -79,8 +75,8 @@
     background:linear-gradient(to bottom,#429f27 0%,#35801e 8%,#2e7118 40%,#1f500d 100%);
     border-radius:0 10px 10px 0;
     color:#fff; font-family:'Franklin Gothic Medium','Arial Black',sans-serif; font-style:italic; font-size:14px; font-weight:bold;
-    text-shadow:1px 1px 2px rgba(0,0,0,.5);
-    box-shadow:2px 0 3px rgba(0,0,0,.3);
+    text-shadow:1px 1px 2px rgba(0,0,0,.7);
+    box-shadow:2px 0 3px rgba(0,0,0,.4);
     cursor:pointer;
   }
   .start-btn:hover{background:linear-gradient(to bottom,#54c933 0%,#409a25 8%,#36851d 40%,#266311 100%);}
@@ -90,6 +86,7 @@
   .start-icon span:nth-child(2){background:#379c13;}
   .start-icon span:nth-child(3){background:#0060e8;}
   .start-icon span:nth-child(4){background:#ffb800;}
+  
   .quick{display:flex; gap:6px; padding-left:10px;}
   .quick span{width:16px; height:16px; border-radius:2px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);}
   .tray{margin-left:auto; display:flex; align-items:center; gap:8px; background:linear-gradient(to bottom,#119ced 0%,#2374d6 9%,#1255be 18%,#1255be 92%,#333 100%); height:30px; padding:0 10px; border-left:1px solid #1042af;}
@@ -155,7 +152,7 @@
 <script>
 // ============ РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК ============
 const CONFIG = {
-  pollId: 'who-am-i-xp-classic-v2',
+  pollId: 'who-am-i-xp-classic-v3', // Изменил ID, чтобы голоса не смешались со старыми тестами
   channelName: '@opupevshiy_600321',
   question: 'Кем я для вас являюсь?',
   options: [
