@@ -9,26 +9,26 @@
 :root{--taskbar-h:30px;--font:Tahoma,"MS Sans Serif",Arial,sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);font-size:11px;color:#000}
-body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bliss_%28Windows_XP%29.png/1280px-Bliss_%28Windows_XP%29.png') center center/cover no-repeat fixed}
+body{background:#5aa6d8 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bliss_%28Windows_XP%29.png/1920px-Bliss_%28Windows_XP%29.png') center center/cover no-repeat fixed}
 
-.desktop{position:fixed;inset:0 0 var(--taskbar-h);z-index:1}
+.desktop{position:fixed;inset:0 0 var(--taskbar-h);z-index:1;cursor:default;user-select:none}
 .desktop-icon{position:absolute;width:75px;text-align:center;color:#fff;font-size:11px;line-height:13px;text-shadow:1px 1px 2px #000;padding:4px 2px;border:1px solid transparent;user-select:none;cursor:default}
-.desktop-icon:hover{background:rgba(49,106,197,.28);border:1px dotted #fff}
+.desktop-icon:hover{background:rgba(49,106,197,.28);border:1px dotted #fff}.desktop-icon:active{background:rgba(49,106,197,.48)}
 .desktop-icon.selected{background:rgba(49,106,197,.42);border:1px dotted #fff}
 .desktop-icon img{width:32px;height:32px;display:block;margin:0 auto 4px;object-fit:contain}
-.di-computer{left:12px;top:12px}.di-docs{left:12px;top:90px}.di-ie{left:12px;top:168px}.di-bin{right:14px;bottom:14px}
+.di-computer{left:12px;top:12px}.di-docs{left:12px;top:92px}.di-ie{left:12px;top:172px}.di-bin{right:15px;bottom:18px}
 
-.window-wrap{position:fixed;z-index:10;left:50%;top:48%;width:620px;max-width:calc(100vw - 16px);max-height:calc(100vh - 50px);transform:translate(-50%,-50%)}
+.window-wrap{position:fixed;z-index:10;left:50%;top:46%;width:650px;max-width:calc(100vw - 12px);max-height:calc(100vh - 46px);transform:translate(-50%,-50%)}
 .window-wrap.minimized{display:none}
-.window-wrap .window{width:100%;box-shadow:2px 3px 10px rgba(0,0,0,.45)!important}
+.window-wrap .window{width:100%;box-shadow:2px 3px 10px rgba(0,0,0,.45)!important}.window-wrap .window:before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:7px 7px 2px 2px;box-shadow:inset 0 1px rgba(255,255,255,.55)}
 .window.maximized{position:fixed;left:0;top:0;width:100vw!important;max-width:none;height:calc(100vh - var(--taskbar-h))!important;transform:none}
 .title-bar-text{display:flex;align-items:center;gap:5px}
-.title-bar-text img{width:16px;height:16px}
+.title-bar-text img{width:16px;height:16px}.title-bar{background:linear-gradient(to bottom,#0a3c9f 0%,#0d5bd7 30%,#0b69e8 60%,#0753c5 100%)}
 
 .menubar{height:20px;display:flex;align-items:center;padding:0 4px;background:#fff;border-bottom:1px solid #919b9c;font-size:11px}
 .menubar span{padding:1px 6px;cursor:default}
 .menubar span:hover{background:#316ac5;color:#fff}
-.toolbar{height:28px;display:flex;align-items:center;gap:1px;padding:2px 4px;background:linear-gradient(#f8f8f8,#e4e4e4);border-bottom:1px solid #919b9c}
+.toolbar{height:28px;display:flex;align-items:center;gap:1px;padding:2px 4px;background:linear-gradient(#fff 0%,#f5f5f5 38%,#dedede 100%);border-bottom:1px solid #919b9c;box-shadow:inset 0 1px #fff}
 .tool{height:22px;border:1px solid transparent;background:transparent;padding:0 5px;color:#222;font-size:10px;border-radius:2px;cursor:default}
 .tool:hover{border-color:#9ab9df;background:#e8f1fc}
 
@@ -36,22 +36,22 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 .tool{display:inline-flex;align-items:center;gap:2px}
 .tool .big{font-size:13px;vertical-align:-1px;margin-right:2px}
 .separator{width:1px;height:18px;background:#bbb;margin:0 3px}
-.address-row{height:22px;display:flex;align-items:center;gap:4px;padding:1px 5px;background:#ece9d8;border-bottom:1px solid #919b9c}
+.address-row{height:22px;display:flex;align-items:center;gap:4px;padding:1px 5px;background:linear-gradient(#f4f2ea,#e7e4d9);border-bottom:1px solid #919b9c}
 .address-label{color:#555;white-space:nowrap}
 .address{height:18px;display:flex;align-items:center;gap:3px;flex:1;background:#fff;border:1px solid #7f9db9;padding:0 3px;box-shadow:inset 1px 1px #ddd}
 .address img{width:13px;height:13px}
 .go-btn{height:18px;width:24px;border:1px solid #7f9db9;background:linear-gradient(#fff,#ddd);font-size:10px;cursor:default}
 
-.content{display:flex;min-height:280px;max-height:calc(100vh - 175px);overflow:auto;background:#fff}
+.content{display:flex;min-height:320px;max-height:calc(100vh - 170px);overflow:auto;background:#fff}
 .window.maximized .content{height:calc(100vh - 130px);max-height:none}
-.sidebar{width:160px;flex:0 0 160px;padding:6px 5px;background:linear-gradient(90deg,#d4e5f7,#eaf4fc);border-right:1px solid #b7cde5}
+.sidebar{width:175px;flex:0 0 175px;padding:6px 5px;background:linear-gradient(90deg,#d5e7f9,#edf6fe);border-right:1px solid #b7cde5;box-shadow:inset -1px 0 #fff}
 .sidebox{margin-bottom:6px;border:1px solid #9db8d3;border-radius:3px;overflow:hidden;background:#f8fbff}
-.sidehead{padding:3px 6px;color:#154b8c;font-weight:bold;background:linear-gradient(#fff,#d6e8f8);border-bottom:1px solid #b7cde5;font-size:11px}
+.sidehead{padding:3px 6px;color:#154b8c;font-weight:bold;background:linear-gradient(#fff 0%,#eef7ff 35%,#d1e5f8 100%);border-bottom:1px solid #b7cde5;font-size:11px}
 .sidebody{padding:4px 6px;color:#24507f;line-height:16px;font-size:11px}
 .sidebody div{cursor:default}
 .sidebody div:before{content:'› ';color:#316ac5;font-weight:bold}
 .sideinfo{color:#555;line-height:14px}
-.main{flex:1;min-width:0;padding:12px 14px 10px;background:#fff}
+.main{flex:1;min-width:0;padding:14px 16px 12px;background:linear-gradient(#fff 0%,#fff 94%,#fafafa 100%)}
 .channel{margin:0 0 6px;color:#666;font-size:10px}
 .main h1{font-size:15px;line-height:19px;margin:0 0 12px;font-weight:bold}
 .choice{display:flex;align-items:center;gap:7px;margin:8px 0;font-size:12px}
@@ -90,12 +90,12 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 /* Poll interior – closer to XP dialog/content */
 .main h1{font-size:14px;font-weight:bold;color:#000;margin:0 0 10px;line-height:18px}
 .choice{margin:6px 0;padding:2px 4px;border-radius:2px}
-.choice:hover{background:#e8f1fc}
+.choice:hover{background:linear-gradient(90deg,#edf5fd,#fff)}
 .choice input[type=radio]{accent-color:#316ac5;width:13px;height:13px}
 .choice label{font-size:12px;cursor:pointer}
 
 .resultbar{border:1px solid #7f9db9;background:#fff}
-.resultbar i{background:linear-gradient(to bottom,#5ba3ef,#1f5ed2)}
+.resultbar i{background:linear-gradient(to bottom,#6eb8ff 0%,#3c86ec 42%,#1f5ed2 100%);box-shadow:inset 0 1px rgba(255,255,255,.7),inset 0 -1px rgba(0,0,0,.15)}
 
 .leader{font-size:9px;font-weight:bold;color:#fff;background:#218117;padding:0 3px;border-radius:2px;margin-left:4px}
 .status-bar{height:21px!important}
@@ -106,7 +106,7 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
   height:30px;position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;
   background:linear-gradient(to bottom,#1f2f86 0%,#3165c4 3%,#3682e5 6%,#4490e6 10%,#3883e5 12%,#2b71e0 15%,#2663da 18%,#235bd6 20%,#2258d5 23%,#2157d6 38%,#245ddb 54%,#2562df 86%,#245fdc 89%,#2158d4 92%,#1d4ec0 95%,#1941a5 98%);
 }
-.taskbar-left{height:100%;flex:1;overflow:hidden;display:flex;align-items:center}
+.taskbar-left{height:100%;flex:1;overflow:hidden;display:flex;align-items:center;min-width:0}
 .taskbar-right{
   flex-shrink:0;display:flex;align-items:center;padding:0 10px;margin-left:10px;
   background:linear-gradient(to bottom,#0c59b9 1%,#139ee9 6%,#18b5f2 10%,#139beb 14%,#1290e8 19%,#0d8dea 63%,#0d9ff1 81%,#0f9eed 88%,#119be9 91%,#1392e2 94%,#137ed7 97%,#095bc9 100%);
@@ -128,10 +128,10 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 /* Start menu */
 .startmenu{position:fixed;z-index:60;left:0;bottom:var(--taskbar-h);width:350px;background:#fff;border:1px solid #0b4fae;border-bottom:0;box-shadow:2px -2px 6px rgba(0,0,0,.35);display:none}
 .startmenu.open{display:block}
-.smhead{height:50px;padding:6px 8px;display:flex;align-items:center;gap:8px;color:#fff;font-weight:bold;font-size:13px;background:linear-gradient(to bottom,#5a9aef,#245ed0)}
-.avatar{width:36px;height:36px;border:2px solid #fff;border-radius:3px;background:#e8f1fb;display:grid;place-items:center;box-shadow:1px 1px 1px #174b99}
+.smhead{height:56px;padding:7px 9px;display:flex;align-items:center;gap:9px;color:#fff;font-weight:bold;font-size:13px;background:linear-gradient(to bottom,#5d9eef 0%,#3c7fd9 45%,#1e5fc4 100%);box-shadow:inset 0 1px rgba(255,255,255,.35)}
+.avatar{width:38px;height:38px;border:2px solid #fff;border-radius:3px;background:#e8f1fb;display:grid;place-items:center;box-shadow:1px 1px 1px #174b99}
 .avatar img{width:30px;height:30px}
-.smcols{display:flex;min-height:250px}
+.smcols{display:flex;min-height:272px}
 .smleft,.smright{width:50%;padding:5px}.smleft{border-right:1px solid #ddd}
 .smitem{display:flex;align-items:center;gap:6px;padding:3px 4px;font-size:11px;line-height:14px;border-radius:2px;cursor:default}
 .smitem:hover{background:#316ac5;color:#fff}
@@ -139,11 +139,11 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 .smitem strong{font-weight:bold}
 .allprograms{border-top:1px solid #ddd;margin-top:3px;padding:6px 7px;text-align:right;font-weight:bold;font-size:11px}
 .allprograms:after{content:' ▶';color:#299c1d}
-.smfooter{height:34px;background:#dce9f8;display:flex;justify-content:flex-end;align-items:center;gap:4px;padding:4px}
+.smfooter{height:38px;background:linear-gradient(#edf4fc,#d4e4f6);display:flex;justify-content:flex-end;align-items:center;gap:4px;padding:4px;border-top:1px solid #a6bfd8}
 .smfooter button{border:0;background:transparent;font-size:10px;cursor:pointer;padding:3px 6px}
 .smfooter button:hover{background:#c5d8ef}
 
-.dialog-layer{position:fixed;inset:0 0 var(--taskbar-h);z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.18)}
+.dialog-layer{position:fixed;inset:0 0 var(--taskbar-h);z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.22)}
 .dialog-layer.show{display:flex}
 .dialog{width:330px;max-width:calc(100vw - 20px);background:#ece9d8;border:1px solid #003c74;border-radius:7px 7px 0 0;box-shadow:2px 4px 10px rgba(0,0,0,.5);overflow:hidden}
 .dialog-title{height:25px;padding:2px 3px 2px 6px;color:#fff;font-weight:bold;font-size:11px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,#0a3a9a,#0b57ce 50%,#0a4fbd)}
@@ -386,7 +386,6 @@ function showBlocked(){showDialog('error');if(tg&&tg.HapticFeedback)tg.HapticFee
 function setMinimized(on){if(on){wrap.classList.add('minimized');$('taskItem').classList.remove('active')}else{wrap.classList.remove('minimized');$('taskItem').classList.add('active')}}
 function toggleMax(){win.classList.toggle('maximized')}
 function enablePostVote(){$('minBtn').disabled=false;$('closeBtn').disabled=false;wrap.dataset.draggable='1'}
-[].forEach(k=>localStorage.removeItem(k));
 if(voted()){const chosen=parseInt(localStorage.getItem(CHOICE_KEY),10)||0;renderResults(chosen,null).then(()=>{enablePostVote();showShare(chosen)})}
 $('closeBtn').addEventListener('click',e=>{e.preventDefault();if(!voted()){showBlocked();return}setMinimized(true)});
 $('minBtn').addEventListener('click',e=>{e.preventDefault();if(!voted()){showBlocked();return}setMinimized(true)});
@@ -399,6 +398,11 @@ $('titlebar').addEventListener('pointerdown',e=>{if(!voted()||win.classList.cont
 $('titlebar').addEventListener('pointermove',e=>{if(!drag)return;wrap.style.left=(e.clientX-dx)+'px';wrap.style.top=(e.clientY-dy)+'px';wrap.style.transform='none'});
 $('titlebar').addEventListener('pointerup',()=>drag=false);$('titlebar').addEventListener('pointercancel',()=>drag=false);
 document.querySelectorAll('.desktop-icon').forEach(icon=>icon.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.desktop-icon').forEach(x=>x.classList.remove('selected'));icon.classList.add('selected')}));
+document.querySelector('.desktop').addEventListener('click',e=>{
+  if(!e.target.closest('.desktop-icon')){
+    document.querySelectorAll('.desktop-icon').forEach(x=>x.classList.remove('selected'));
+  }
+});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('startMenu').classList.remove('open');if(dialogLayer.classList.contains('show')&&$('dialogOk'))hideDialog()}});
 </script>
 </body>
