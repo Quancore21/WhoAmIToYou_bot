@@ -8,10 +8,6 @@
   1. Отредактируйте CONFIG в конце файла (перед </body>).
   2. Захостите файл (GitHub Pages / Vercel / Netlify).
   3. Вставьте ссылку в BotFather → Bot Settings → Menu Button.
-
-  Про обои: реальное фото "Bliss" (заставка XP) — лицензированная фотография
-  Charles O'Rear, её нельзя встраивать. Ниже — векторная имитация того же
-  пейзажа (зелёные холмы, голубое небо), без копирайта.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -19,31 +15,19 @@
 <link rel="stylesheet" href="https://unpkg.com/xp.css">
 <style>
   :root{
-    --sky-top:#2f7fe0; --sky-mid:#6fb8f2; --sky-low:#bfe3fb;
-    --hill-back:#5db14a; --hill-front:#3a9130;
     --xp-body:#ece9d8; --xp-menu-hover:#316ac5;
     --text-muted:#5c5c5c;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  
   html,body{margin:0; padding:0; overflow-x:hidden; font-family:Tahoma,"Trebuchet MS",sans-serif;}
+  
   body{
     min-height:100vh; position:relative;
-    background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-low) 78%);
+    background: url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') no-repeat center center;
+    background-size: cover;
     padding-bottom:30px;
   }
-
-  .cloud{position:absolute; background:#fff; border-radius:50px; opacity:.9;}
-  .cloud::before,.cloud::after{content:''; position:absolute; background:#fff; border-radius:50%;}
-  .cloud-1{top:6%; left:8%; width:70px; height:22px;}
-  .cloud-1::before{width:34px; height:34px; top:-16px; left:8px;}
-  .cloud-1::after{width:26px; height:26px; top:-10px; left:36px;}
-  .cloud-2{top:13%; right:12%; width:54px; height:18px;}
-  .cloud-2::before{width:26px; height:26px; top:-12px; left:6px;}
-  .cloud-2::after{width:20px; height:20px; top:-8px; left:28px;}
-
-  .hill{position:absolute; bottom:0; left:0; width:100%;}
-  .hill-back{height:22vh; background:var(--hill-back); clip-path:polygon(0 55%,20% 30%,50% 48%,75% 20%,100% 42%,100% 100%,0 100%);}
-  .hill-front{height:13vh; background:var(--hill-front); clip-path:polygon(0 65%,25% 38%,55% 58%,80% 30%,100% 50%,100% 100%,0 100%);}
 
   .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:1px 1px 2px #000; z-index:2; cursor:pointer;}
   .icon-shape{width:32px; height:32px; margin:0 auto 4px;}
@@ -120,11 +104,6 @@
 </head>
 <body>
 
-<div class="cloud cloud-1"></div>
-<div class="cloud cloud-2"></div>
-<div class="hill hill-back"></div>
-<div class="hill hill-front"></div>
-
 <div class="desktop-icon di-1"><div class="icon-shape icon-docs"></div>Мои документы</div>
 <div class="desktop-icon di-2"><div class="icon-shape icon-bin"></div>Корзина</div>
 
@@ -177,7 +156,7 @@
 // ============ РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК ============
 const CONFIG = {
   pollId: 'who-am-i-xp-classic-v2',
-  channelName: 'Not Dead Archive',
+  channelName: '@opupevshiy_600321',
   question: 'Кем я для вас являюсь?',
   options: [
     'Друг',
@@ -199,7 +178,7 @@ const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : 
 if (tg) {
   tg.ready();
   tg.expand();
-  try { tg.setBackgroundColor('#2f7fe0'); tg.setHeaderColor('#2f7fe0'); } catch(e) {}
+  try { tg.setBackgroundColor('#245edb'); tg.setHeaderColor('#245edb'); } catch(e) {}
 }
 
 document.getElementById('eyebrow').textContent = CONFIG.channelName;
