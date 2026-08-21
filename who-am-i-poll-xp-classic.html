@@ -2,12 +2,16 @@
 <html lang="ru">
 <head>
 <!--
-  МИНИ-АПП — стиль: 1-в-1 Windows XP (использует библиотеку XP.css)
+  МИНИ-АПП — стиль: 1-в-1 Windows XP (XP.css + доработанная панель задач)
 
   Настройка и деплой — как в предыдущих версиях:
   1. Отредактируйте CONFIG в конце файла (перед </body>).
   2. Захостите файл (GitHub Pages / Vercel / Netlify).
   3. Вставьте ссылку в BotFather → Bot Settings → Menu Button.
+
+  Про обои: реальное фото "Bliss" (заставка XP) — лицензированная фотография
+  Charles O'Rear, её нельзя встраивать. Ниже — векторная имитация того же
+  пейзажа (зелёные холмы, голубое небо), без копирайта.
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -21,11 +25,11 @@
     --text-muted:#5c5c5c;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html,body{margin:0; padding:0; overflow-x:hidden;}
+  html,body{margin:0; padding:0; overflow-x:hidden; font-family:Tahoma,"Trebuchet MS",sans-serif;}
   body{
     min-height:100vh; position:relative;
     background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 55%,var(--sky-low) 78%);
-    padding-bottom:50px;
+    padding-bottom:30px;
   }
 
   .cloud{position:absolute; background:#fff; border-radius:50px; opacity:.9;}
@@ -41,27 +45,28 @@
   .hill-back{height:22vh; background:var(--hill-back); clip-path:polygon(0 55%,20% 30%,50% 48%,75% 20%,100% 42%,100% 100%,0 100%);}
   .hill-front{height:13vh; background:var(--hill-front); clip-path:polygon(0 65%,25% 38%,55% 58%,80% 30%,100% 50%,100% 100%,0 100%);}
 
-  .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:0 1px 2px rgba(0,0,0,.7); z-index:2;}
-  .icon-shape{width:36px; height:30px; margin:0 auto 4px;}
+  .desktop-icon{position:absolute; width:64px; text-align:center; color:#fff; font-size:11px; text-shadow:1px 1px 2px #000; z-index:2; cursor:pointer;}
+  .icon-shape{width:32px; height:32px; margin:0 auto 4px;}
   .icon-docs{background:linear-gradient(180deg,#fff2a8,#f2c94c); border-radius:2px; position:relative;}
-  .icon-docs::before{content:''; position:absolute; top:-6px; left:0; width:16px; height:6px; background:#f2c94c; border-radius:2px 2px 0 0;}
+  .icon-docs::before{content:''; position:absolute; top:-6px; left:0; width:14px; height:6px; background:#f2c94c; border-radius:2px 2px 0 0;}
   .icon-bin{background:linear-gradient(180deg,#dfe6ee,#a9b7c6); clip-path:polygon(15% 0,85% 0,100% 100%,0 100%); position:relative;}
   .icon-bin::before{content:''; position:absolute; top:-4px; left:-10%; width:120%; height:5px; background:#a9b7c6; border-radius:2px;}
-  .di-1{top:18px; left:12px;}
-  .di-2{top:104px; left:12px;}
+  .di-1{top:20px; left:20px;}
+  .di-2{top:90px; left:20px;}
 
   .wrap{
     position:relative; z-index:3; max-width:420px; margin:0 auto;
-    padding:calc(30px + env(safe-area-inset-top)) 16px 20px;
-    display:flex; align-items:center; min-height:calc(100vh - 50px);
+    padding:calc(40px + env(safe-area-inset-top)) 16px 20px;
+    display:flex; align-items:center; min-height:calc(100vh - 30px);
   }
-  .window{ width:100%; position:relative; transition:transform .12s ease; }
+  .window{ width:100%; position:relative; transition:transform .12s ease; box-shadow:2px 4px 8px rgba(0,0,0,.5); }
   .window.shake{animation:shake .4s;}
   @keyframes shake{ 0%,100%{transform:translateX(0);} 20%{transform:translateX(-6px);} 40%{transform:translateX(6px);} 60%{transform:translateX(-4px);} 80%{transform:translateX(4px);} }
 
   .close-hint{
-    position:absolute; right:8px; top:34px; background:#2b2b2b; color:#fff; font-size:11px;
-    padding:4px 8px; border-radius:3px; opacity:0; pointer-events:none; transition:opacity .2s; z-index:5;
+    position:absolute; right:8px; top:34px; background:#ffffe1; color:#000; border:1px solid #000; font-size:11px;
+    padding:4px 8px; border-radius:2px; opacity:0; pointer-events:none; transition:opacity .2s; z-index:5;
+    box-shadow:2px 2px 3px rgba(0,0,0,.3);
   }
   .close-hint.show{opacity:1;}
 
@@ -72,33 +77,40 @@
   .menubar span{padding:2px 4px; border-radius:2px;}
   .menubar span:hover{background:var(--xp-menu-hover); color:#fff;}
 
-  .eyebrow{margin:0 0 10px; font-size:11px; letter-spacing:.04em; color:var(--text-muted); font-weight:bold;}
+  .eyebrow{margin:0 0 10px; font-size:11px; color:var(--text-muted); font-weight:bold;}
   legend{font-size:16px; font-weight:bold;}
   #vote-error{color:#a33; font-size:11px; margin:4px 0 0; text-align:right; min-height:14px;}
   #results progress{width:100%; display:block;}
   .leader-tag{font-size:9px; font-weight:bold; color:#fff; background:#1f7a0a; padding:1px 5px; border-radius:2px; margin-left:4px;}
 
   .taskbar{
-    position:fixed; left:0; right:0; bottom:0; height:42px; z-index:10;
-    display:flex; align-items:center; padding:0 6px; gap:6px;
-    background:linear-gradient(180deg,#3a86ff,#0c3c9b);
-    border-top:2px solid #0a3a8f;
+    position:fixed; left:0; right:0; bottom:0; height:30px; z-index:10;
+    display:flex; align-items:center; gap:6px;
+    background:linear-gradient(to bottom,#245edb 0%,#3f8cf3 9%,#245edb 18%,#245edb 92%,#333 100%);
+    border-top:1px solid #000080;
   }
   .start-btn{
-    position:relative; overflow:hidden; display:flex; align-items:center; gap:6px; padding:5px 12px 5px 8px;
-    background:linear-gradient(180deg,#5ecb3f,#1f7a0a); border-radius:4px 12px 12px 4px;
-    color:#fff; font-weight:bold; font-size:13px; font-style:italic;
-    box-shadow:0 1px 2px rgba(0,0,0,.4);
+    position:relative; overflow:hidden; display:flex; align-items:center; gap:6px;
+    height:30px; padding:0 14px 0 10px;
+    background:linear-gradient(to bottom,#429f27 0%,#35801e 8%,#2e7118 40%,#1f500d 100%);
+    border-radius:0 10px 10px 0;
+    color:#fff; font-family:'Franklin Gothic Medium','Arial Black',sans-serif; font-style:italic; font-size:14px; font-weight:bold;
+    text-shadow:1px 1px 2px rgba(0,0,0,.5);
+    box-shadow:2px 0 3px rgba(0,0,0,.3);
+    cursor:pointer;
   }
-  .start-btn::before{content:''; position:absolute; top:0; left:0; right:0; height:50%; background:rgba(255,255,255,.28);}
-  .start-icon{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; width:12px; height:12px; gap:1px;}
-  .start-icon span{background:#fff; border-radius:1px;}
-  .taskbar-divider{width:1px; height:26px; background:rgba(255,255,255,.3);}
-  .quick{display:flex; gap:6px;}
-  .quick span{width:20px; height:20px; border-radius:3px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);}
-  .tray{margin-left:auto; display:flex; align-items:center; gap:8px; background:rgba(0,0,0,.2); padding:5px 10px; border-radius:3px 0 0 3px;}
+  .start-btn:hover{background:linear-gradient(to bottom,#54c933 0%,#409a25 8%,#36851d 40%,#266311 100%);}
+  .start-icon{position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; width:14px; height:14px; gap:1px; transform:skewX(-10deg);}
+  .start-icon span{border-radius:1px;}
+  .start-icon span:nth-child(1){background:#f24b26;}
+  .start-icon span:nth-child(2){background:#379c13;}
+  .start-icon span:nth-child(3){background:#0060e8;}
+  .start-icon span:nth-child(4){background:#ffb800;}
+  .quick{display:flex; gap:6px; padding-left:10px;}
+  .quick span{width:16px; height:16px; border-radius:2px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);}
+  .tray{margin-left:auto; display:flex; align-items:center; gap:8px; background:linear-gradient(to bottom,#119ced 0%,#2374d6 9%,#1255be 18%,#1255be 92%,#333 100%); height:30px; padding:0 10px; border-left:1px solid #1042af;}
   .tray-dot{width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.5);}
-  .clock{color:#fff; font-size:12px;}
+  .clock{color:#fff; font-size:11px;}
 
   .confetti-layer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50;}
   .confetti-piece{position:absolute; top:-12px; width:7px; height:12px; border-radius:1px; animation:confettiFall linear forwards;}
@@ -150,7 +162,6 @@
 
 <div class="taskbar">
   <div class="start-btn"><div class="start-icon"><span></span><span></span><span></span><span></span></div>Пуск</div>
-  <div class="taskbar-divider"></div>
   <div class="quick"><span></span><span></span><span></span></div>
   <div class="tray">
     <div class="tray-dot"></div>
@@ -166,7 +177,7 @@
 // ============ РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК ============
 const CONFIG = {
   pollId: 'who-am-i-xp-classic-v2',
-  channelName: '@ваш_канал',
+  channelName: 'Not Dead Archive',
   question: 'Кем я для вас являюсь?',
   options: [
     'Друг',
