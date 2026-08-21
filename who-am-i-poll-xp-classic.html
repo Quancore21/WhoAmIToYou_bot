@@ -4,121 +4,290 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Опрос.exe</title>
+<link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.6/dist/XP.css">
 <style>
-:root{--blue:#245edb;--blue2:#0a56c9;--light:#75a9ef;--cream:#ece9d8;--border:#003c9d;--green:#2d7d17;--font:Tahoma,Arial,sans-serif}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:var(--font);font-size:11px;color:#000}
-body{background:#6db5ed url('https://upload.wikimedia.org/wikipedia/en/1/17/Bliss_%28Windows_XP%29.png') center center/cover no-repeat fixed}
-button,input{font:inherit}button{cursor:pointer}
-/* Desktop / Bliss */
-.desktop{position:fixed;inset:0 0 30px;z-index:1}
-.desktop-icon{position:absolute;width:82px;text-align:center;color:#fff;font-size:11px;line-height:13px;text-shadow:1px 1px 2px #000;padding:3px 2px;border:1px solid transparent;user-select:none}
-.desktop-icon:hover{background:rgba(49,106,197,.28);border:1px dotted #fff}.desktop-icon.selected{background:rgba(49,106,197,.42);border:1px dotted #fff}
-.desktop-icon img{width:32px;height:32px;display:block;margin:0 auto 4px;object-fit:contain}.di-computer{left:8px;top:8px}.di-docs{left:8px;top:82px}.di-ie{left:8px;top:156px}.di-bin{right:10px;bottom:10px}
-/* Window */
-.window-wrap{position:fixed;z-index:10;left:50%;top:50%;width:650px;max-width:calc(100vw - 18px);max-height:calc(100vh - 46px);transform:translate(-50%,-53%)}
-.window{width:100%;background:#fff;border:1px solid #003c9d;border-radius:8px 8px 0 0;box-shadow:2px 4px 12px rgba(0,0,0,.55);overflow:hidden}
-.window.maximized{position:fixed;left:0;top:0;width:100vw;max-width:none;height:calc(100vh - 30px);max-height:none;transform:none;border-radius:0}
-.titlebar{height:30px;padding:3px 3px 3px 7px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-weight:bold;font-size:12px;background:linear-gradient(#78adf5 0%,#4b8ded 8%,#0b57ce 50%,#0a4fbd 100%);text-shadow:1px 1px #174b99;border-bottom:1px solid #003a9b;user-select:none}
-.title{display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.title img{width:16px;height:16px}.controls{display:flex;gap:2px}.controls button{position:relative;width:22px;height:20px;padding:0;border:1px solid #fff;border-radius:2px;background:linear-gradient(#76aaf5,#1b61d4);box-shadow:inset 1px 1px rgba(255,255,255,.35),1px 1px 0 #0a3d91;color:#fff}.controls button:after{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Arial;font-weight:bold;text-shadow:1px 1px #19458e}.controls .min:after{content:'—';font-size:13px;padding-bottom:5px}.controls .max:after{content:'□';font-size:12px}.controls .close{background:linear-gradient(#fa6d67,#d9251d)}.controls .close:after{content:'×';font-size:15px}.controls button:disabled{opacity:.72;cursor:default}
-.menubar{height:23px;display:flex;align-items:center;padding:0 6px;background:#fff;border-bottom:1px solid #aaa}.menubar span{padding:4px 8px}.menubar span:hover{background:#316ac5;color:#fff}
-.toolbar{height:32px;display:flex;align-items:center;gap:2px;padding:3px 6px;background:linear-gradient(#fafafa,#e2e2e2);border-bottom:1px solid #aaa}.tool{height:25px;border:1px solid transparent;background:transparent;padding:1px 6px;color:#333;font-size:10px;border-radius:2px}.tool:hover{border-color:#9ab9df;background:#e7f1fc}.tool .big{font-size:16px;vertical-align:-2px;margin-right:3px}.separator{width:1px;height:22px;background:#bbb;margin:0 4px}
-.address-row{height:25px;display:flex;align-items:center;gap:5px;padding:2px 6px;background:#eee;border-bottom:1px solid #aaa}.address-label{color:#555}.address{height:20px;display:flex;align-items:center;gap:5px;flex:1;background:#fff;border:1px solid #7f9db9;padding:1px 5px;box-shadow:inset 1px 1px #ddd}.address img{width:16px;height:16px}.go{height:20px;width:28px;border:1px solid #777;background:linear-gradient(#fff,#ddd);padding:0}
-.content{display:flex;min-height:285px;max-height:calc(100vh - 184px);overflow:auto;background:#fff}.window.maximized .content{height:calc(100vh - 132px);max-height:none}.sidebar{width:170px;flex:0 0 170px;padding:7px 6px;background:linear-gradient(90deg,#d6e8fa,#edf6ff);border-right:1px solid #b7cde5}.sidebox{margin-bottom:7px;border:1px solid #9db8d3;border-radius:4px;overflow:hidden;background:#f9fcff}.sidehead{padding:4px 7px;color:#154b8c;font-weight:bold;background:linear-gradient(#fff,#d8eafa);border-bottom:1px solid #b7cde5}.sidebody{padding:5px 7px;color:#24507f;line-height:17px}.sidebody div{cursor:pointer}.sidebody div:before{content:'› ';color:#316ac5;font-weight:bold}.sideinfo{color:#555;line-height:15px}
-.main{flex:1;min-width:0;padding:14px 16px 12px;background:#fff}.channel{margin:0 0 7px;color:#555;font-size:10px}.main h1{font-size:16px;line-height:20px;margin:0 0 14px;font-weight:bold}.choice{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:12px}.choice input{width:13px;height:13px;accent-color:#316ac5}.choice label{cursor:pointer}.vote-row{display:flex;justify-content:flex-end;margin-top:15px}.xpbtn{min-width:94px;height:24px;padding:1px 12px;border:1px solid #003c9d;border-radius:3px;background:linear-gradient(#fff,#f3f3f3 45%,#d4d4d4);box-shadow:inset 1px 1px #fff,1px 1px 1px rgba(0,0,0,.18)}.xpbtn:hover{background:linear-gradient(#fff,#e5f0ff 45%,#c8dcf7)}.xpbtn:active{box-shadow:inset 1px 1px #aaa}.xpbtn:disabled{opacity:.65}.error{min-height:14px;color:#a00000;font-size:10px;text-align:right;margin:5px 0 0}
-.results{font-size:11px;opacity:0;transform:translateY(7px);transition:opacity .35s ease,transform .35s ease}.results.show{opacity:1;transform:translateY(0)}.result{margin:0 0 12px}.resulthead{display:flex;justify-content:space-between;gap:10px;margin-bottom:3px}.resultbar{height:14px;border:1px solid #7d7d7d;background:#fff;padding:1px}.resultbar i{display:block;height:10px;background:linear-gradient(#73acf1,#1f5ed2);box-shadow:inset 1px 1px rgba(255,255,255,.55);width:0;transition:width .65s ease}.leader{font-size:9px;font-weight:bold;color:#fff;background:#218117;padding:1px 4px;border-radius:2px;margin-left:4px}
-.status{height:22px;display:flex;gap:2px;background:#ece9d8;border-top:1px solid #aaa;padding:2px}.status p{margin:0;padding:2px 7px;border:1px solid #c2c0b6;color:#444;font-size:10px;flex:1}.status p:last-child{flex:0 0 105px}
-/* Taskbar */
-.taskbar{position:fixed;z-index:50;left:0;right:0;bottom:0;height:30px;display:flex;align-items:center;background:linear-gradient(#3f91ef 0%,#2d75dc 8%,#245ed0 92%,#1645a2 100%);border-top:1px solid #0b398e;box-shadow:0 -1px 2px rgba(0,0,0,.35)}
-.start{height:30px;min-width:92px;padding:0 14px 0 9px;border:0;border-radius:0 10px 10px 0;display:flex;align-items:center;gap:6px;color:#fff;background:linear-gradient(#61c73a,#338e20 45%,#19640f);font:bold italic 14px 'Arial Black',Arial;text-shadow:1px 1px 2px #174a0d;box-shadow:1px 0 3px rgba(0,0,0,.5)}.start:hover{filter:brightness(1.08)}.winlogo{width:17px;height:17px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;transform:skewX(-9deg)}.winlogo i:nth-child(1){background:#f24b26}.winlogo i:nth-child(2){background:#42a92a}.winlogo i:nth-child(3){background:#0877df}.winlogo i:nth-child(4){background:#ffc300}
-.quick{height:30px;display:flex;align-items:center;padding-left:7px;border-left:1px solid rgba(255,255,255,.22)}.quick button{width:25px;height:25px;border:0;background:transparent;display:grid;place-items:center}.quick img{width:19px;height:19px;object-fit:contain}.taskitem{height:24px;min-width:180px;max-width:240px;margin-left:7px;border:1px solid #184da7;border-top-color:#66a0ee;border-radius:2px;background:linear-gradient(#3e8be9,#1d5fc8);color:#fff;text-align:left;padding:2px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;box-shadow:inset 1px 1px rgba(255,255,255,.2)}.taskitem.active{background:linear-gradient(#164ea9,#0d3f91);box-shadow:inset 1px 1px rgba(0,0,0,.25)}
-.tray{height:30px;margin-left:auto;display:flex;align-items:center;gap:7px;padding:0 10px;background:linear-gradient(#2f8be7,#155bc2);border-left:1px solid #0d4ba7;color:#fff}.trayicon{font-size:12px}.clock{font-size:10px;text-shadow:1px 1px #12458c}
-/* Start menu, closer to XP Luna */
-.startmenu{position:fixed;z-index:60;left:0;bottom:30px;width:380px;background:#fff;border:1px solid #0b4fae;border-bottom:0;box-shadow:3px -2px 8px rgba(0,0,0,.4);display:none}.startmenu.open{display:block}.smhead{height:54px;padding:7px 9px;display:flex;align-items:center;gap:9px;color:#fff;font-weight:bold;font-size:14px;background:linear-gradient(#62a0ef,#245ed0)}.avatar{width:38px;height:38px;border:2px solid #fff;border-radius:3px;background:#e8f1fb;display:grid;place-items:center;box-shadow:1px 1px 2px #174b99}.avatar img{width:32px;height:32px}.smcols{display:flex;min-height:282px}.smleft,.smright{width:50%;padding:6px}.smleft{border-right:1px solid #ddd}.smitem{display:flex;align-items:center;gap:7px;padding:4px;font-size:11px;line-height:15px;border-radius:2px}.smitem:hover{background:#316ac5;color:#fff}.smitem img{width:24px;height:24px;object-fit:contain;flex:0 0 24px}.smitem strong{font-weight:bold}.allprograms{border-top:1px solid #ddd;margin-top:3px;padding:7px 8px;text-align:right;font-weight:bold}.allprograms:after{content:' ▶';color:#299c1d}.smfooter{height:35px;background:#dce9f8;display:flex;justify-content:flex-end;align-items:center;gap:5px;padding:5px}.smfooter button{border:0;background:transparent;font-size:10px}
-/* XP modal dialogs */
-.dialog-layer{position:fixed;inset:0 0 30px;z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.12)}.dialog-layer.show{display:flex}.dialog{width:360px;max-width:calc(100vw - 28px);background:#ece9d8;border:1px solid #003c9d;border-radius:7px 7px 0 0;box-shadow:3px 5px 12px rgba(0,0,0,.55);overflow:hidden}.dialog-title{height:28px;padding:3px 4px 3px 7px;color:#fff;font-weight:bold;font-size:11px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#78adf5,#0b57ce 55%,#0a4fbd)}.dialog-title button{width:20px;height:19px;padding:0;color:#fff;border:1px solid #fff;border-radius:2px;background:#d9251d;font:bold 14px Arial}.dialog-body{padding:16px 14px 12px;background:#ece9d8}.dialog-row{display:flex;gap:12px;align-items:flex-start}.dialog-icon{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:#d52b25;color:#fff;display:grid;place-items:center;font:bold 24px Arial;box-shadow:inset 1px 1px rgba(255,255,255,.5)}.dialog-text{font-size:11px;line-height:16px}.dialog-actions{display:flex;justify-content:center;margin-top:15px}.dialog-actions button{min-width:72px;height:23px;border:1px solid #003c9d;border-radius:2px;background:linear-gradient(#fff,#eee 45%,#ccc);box-shadow:inset 1px 1px #fff}.loading-icon{width:32px;height:32px;border:3px solid #b6c8e3;border-top-color:#155bc2;border-radius:50%;animation:spin .8s linear infinite}.progress-shell{height:18px;border:1px solid #7f7f7f;background:#fff;padding:2px;margin-top:12px}.progress-fill{height:12px;width:0;background:repeating-linear-gradient(90deg,#245edb 0 12px,#fff 12px 15px);transition:width .15s linear}
-/* disabled/minimized */
-.window-wrap.minimized{display:none}.shake{animation:shake .35s}@keyframes shake{0%,100%{transform:translate(-50%,-53%)}20%{transform:translate(calc(-50% - 5px),-53%)}40%{transform:translate(calc(-50% + 5px),-53%)}60%{transform:translate(calc(-50% - 3px),-53%)}80%{transform:translate(calc(-50% + 3px),-53%)}}
-.confetti{position:fixed;inset:0 0 30px;z-index:90;pointer-events:none;overflow:hidden}.piece{position:absolute;top:-12px;width:7px;height:12px;animation:fall linear forwards;border-radius:1px}@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.1}}
-/* Mobile */
-@media(max-width:700px){.window-wrap{width:calc(100vw - 10px);max-width:none}.sidebar{display:none}.content{max-height:calc(100vh - 184px)}.startmenu{width:min(380px,100vw)}.taskitem{min-width:120px}.desktop-icon{display:none}.di-bin{display:block}.dialog{width:330px}.window.maximized{width:100vw}}
+:root{--taskbar-h:30px;--font:Tahoma,"MS Sans Serif",Arial,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);font-size:11px;color:#000}
+body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bliss_%28Windows_XP%29.png/1280px-Bliss_%28Windows_XP%29.png') center center/cover no-repeat fixed}
+
+.desktop{position:fixed;inset:0 0 var(--taskbar-h);z-index:1}
+.desktop-icon{position:absolute;width:75px;text-align:center;color:#fff;font-size:11px;line-height:13px;text-shadow:1px 1px 2px #000;padding:4px 2px;border:1px solid transparent;user-select:none;cursor:default}
+.desktop-icon:hover{background:rgba(49,106,197,.28);border:1px dotted #fff}
+.desktop-icon.selected{background:rgba(49,106,197,.42);border:1px dotted #fff}
+.desktop-icon img{width:32px;height:32px;display:block;margin:0 auto 4px;object-fit:contain}
+.di-computer{left:12px;top:12px}.di-docs{left:12px;top:90px}.di-ie{left:12px;top:168px}.di-bin{right:14px;bottom:14px}
+
+.window-wrap{position:fixed;z-index:10;left:50%;top:48%;width:620px;max-width:calc(100vw - 16px);max-height:calc(100vh - 50px);transform:translate(-50%,-50%)}
+.window-wrap.minimized{display:none}
+.window-wrap .window{width:100%;box-shadow:2px 3px 10px rgba(0,0,0,.45)!important}
+.window.maximized{position:fixed;left:0;top:0;width:100vw!important;max-width:none;height:calc(100vh - var(--taskbar-h))!important;transform:none}
+.title-bar-text{display:flex;align-items:center;gap:5px}
+.title-bar-text img{width:16px;height:16px}
+
+.menubar{height:20px;display:flex;align-items:center;padding:0 4px;background:#fff;border-bottom:1px solid #919b9c;font-size:11px}
+.menubar span{padding:1px 6px;cursor:default}
+.menubar span:hover{background:#316ac5;color:#fff}
+.toolbar{height:28px;display:flex;align-items:center;gap:1px;padding:2px 4px;background:linear-gradient(#f8f8f8,#e4e4e4);border-bottom:1px solid #919b9c}
+.tool{height:22px;border:1px solid transparent;background:transparent;padding:0 5px;color:#222;font-size:10px;border-radius:2px;cursor:default}
+.tool:hover{border-color:#9ab9df;background:#e8f1fc}
+
+.tool-icon{width:16px;height:16px;vertical-align:middle;margin-right:3px;object-fit:contain}
+.tool{display:inline-flex;align-items:center;gap:2px}
+.tool .big{font-size:13px;vertical-align:-1px;margin-right:2px}
+.separator{width:1px;height:18px;background:#bbb;margin:0 3px}
+.address-row{height:22px;display:flex;align-items:center;gap:4px;padding:1px 5px;background:#ece9d8;border-bottom:1px solid #919b9c}
+.address-label{color:#555;white-space:nowrap}
+.address{height:18px;display:flex;align-items:center;gap:3px;flex:1;background:#fff;border:1px solid #7f9db9;padding:0 3px;box-shadow:inset 1px 1px #ddd}
+.address img{width:13px;height:13px}
+.go-btn{height:18px;width:24px;border:1px solid #7f9db9;background:linear-gradient(#fff,#ddd);font-size:10px;cursor:default}
+
+.content{display:flex;min-height:280px;max-height:calc(100vh - 175px);overflow:auto;background:#fff}
+.window.maximized .content{height:calc(100vh - 130px);max-height:none}
+.sidebar{width:160px;flex:0 0 160px;padding:6px 5px;background:linear-gradient(90deg,#d4e5f7,#eaf4fc);border-right:1px solid #b7cde5}
+.sidebox{margin-bottom:6px;border:1px solid #9db8d3;border-radius:3px;overflow:hidden;background:#f8fbff}
+.sidehead{padding:3px 6px;color:#154b8c;font-weight:bold;background:linear-gradient(#fff,#d6e8f8);border-bottom:1px solid #b7cde5;font-size:11px}
+.sidebody{padding:4px 6px;color:#24507f;line-height:16px;font-size:11px}
+.sidebody div{cursor:default}
+.sidebody div:before{content:'› ';color:#316ac5;font-weight:bold}
+.sideinfo{color:#555;line-height:14px}
+.main{flex:1;min-width:0;padding:12px 14px 10px;background:#fff}
+.channel{margin:0 0 6px;color:#666;font-size:10px}
+.main h1{font-size:15px;line-height:19px;margin:0 0 12px;font-weight:bold}
+.choice{display:flex;align-items:center;gap:7px;margin:8px 0;font-size:12px}
+.choice input{width:13px;height:13px;accent-color:#316ac5}
+.choice label{cursor:pointer}
+
+.vote-row{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+
+.error{min-height:14px;color:#a00000;font-size:10px;text-align:right;margin:4px 0 0}
+.results{font-size:11px;opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .35s ease}
+.results.show{opacity:1;transform:none}
+.result{margin:0 0 11px}
+.resulthead{display:flex;justify-content:space-between;gap:8px;margin-bottom:2px}
+.resultbar{height:13px;border:1px solid #7d7d7d;background:#fff;padding:1px}
+.resultbar i{display:block;height:9px;background:linear-gradient(#73acf1,#1f5ed2);box-shadow:inset 1px 1px rgba(255,255,255,.5);width:0;transition:width .65s ease}
+
+/* Poll interior – closer to XP */
+.main fieldset { border: none; padding: 0; margin: 0; }
+.main h1 { font-size: 14px; font-weight: bold; margin: 0 0 10px; color: #000; }
+.channel { color: #555; font-size: 10px; margin-bottom: 8px; }
+.choice { margin: 6px 0; padding: 2px 0; }
+.choice label { font-size: 12px; }
+.vote-row button {
+  min-width: 90px; height: 23px; padding: 0 12px;
+  border: 1px solid #003c74; border-radius: 3px;
+  background: linear-gradient(#fff 0%, #ece9d8 45%, #d4d0c8 100%);
+  box-shadow: inset 1px 1px 0 #fff;
+  font-family: Tahoma, sans-serif; font-size: 11px; cursor: pointer;
+}
+.vote-row button:hover { background: linear-gradient(#fff 0%, #e5f0ff 45%, #c8dcf7 100%); }
+.vote-row button:active { background: #c8dcf7; box-shadow: inset 1px 1px 2px #888; }
+.vote-row button:disabled { color: #888; }
+
+
+/* Poll interior – closer to XP dialog/content */
+.main h1{font-size:14px;font-weight:bold;color:#000;margin:0 0 10px;line-height:18px}
+.choice{margin:6px 0;padding:2px 4px;border-radius:2px}
+.choice:hover{background:#e8f1fc}
+.choice input[type=radio]{accent-color:#316ac5;width:13px;height:13px}
+.choice label{font-size:12px;cursor:pointer}
+
+.resultbar{border:1px solid #7f9db9;background:#fff}
+.resultbar i{background:linear-gradient(to bottom,#5ba3ef,#1f5ed2)}
+
+.leader{font-size:9px;font-weight:bold;color:#fff;background:#218117;padding:0 3px;border-radius:2px;margin-left:4px}
+.status-bar{height:21px!important}
+.status-bar-field{font-size:10px!important}
+
+/* ===== Taskbar — taken from ShizukuIchi/winXP ===== */
+.taskbar{
+  height:30px;position:fixed;bottom:0;left:0;right:0;z-index:50;display:flex;
+  background:linear-gradient(to bottom,#1f2f86 0%,#3165c4 3%,#3682e5 6%,#4490e6 10%,#3883e5 12%,#2b71e0 15%,#2663da 18%,#235bd6 20%,#2258d5 23%,#2157d6 38%,#245ddb 54%,#2562df 86%,#245fdc 89%,#2158d4 92%,#1d4ec0 95%,#1941a5 98%);
+}
+.taskbar-left{height:100%;flex:1;overflow:hidden;display:flex;align-items:center}
+.taskbar-right{
+  flex-shrink:0;display:flex;align-items:center;padding:0 10px;margin-left:10px;
+  background:linear-gradient(to bottom,#0c59b9 1%,#139ee9 6%,#18b5f2 10%,#139beb 14%,#1290e8 19%,#0d8dea 63%,#0d9ff1 81%,#0f9eed 88%,#119be9 91%,#1392e2 94%,#137ed7 97%,#095bc9 100%);
+  border-left:1px solid #1042af;box-shadow:inset 1px 0 1px #18bbff;
+}
+.start-img{height:100%;margin-right:10px;cursor:pointer;display:block}
+.start-img:hover{filter:brightness(105%)}
+.start-img:active{filter:brightness(85%)}
+.taskitem{
+  flex:0 1 auto;min-width:120px;max-width:160px;color:#fff;border-radius:2px;margin:2px 0 0 4px;padding:0 8px 0 6px;height:22px;font-size:11px;
+  background-color:#3c81f3;box-shadow:inset -1px 0 rgba(0,0,0,.3),inset 1px 1px 1px rgba(255,255,255,.2);
+  position:relative;display:flex;align-items:center;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;
+}
+.taskitem:hover{background-color:#53a3ff}
+.taskitem.active{background-color:#1e52b7;box-shadow:inset 0 0 1px 1px rgba(0,0,0,.3),inset 1px 0 1px rgba(0,0,0,.7)}
+.trayicon{font-size:12px;margin-right:6px}
+.clock{font-size:11px;color:#fff}
+
+/* Start menu */
+.startmenu{position:fixed;z-index:60;left:0;bottom:var(--taskbar-h);width:350px;background:#fff;border:1px solid #0b4fae;border-bottom:0;box-shadow:2px -2px 6px rgba(0,0,0,.35);display:none}
+.startmenu.open{display:block}
+.smhead{height:50px;padding:6px 8px;display:flex;align-items:center;gap:8px;color:#fff;font-weight:bold;font-size:13px;background:linear-gradient(to bottom,#5a9aef,#245ed0)}
+.avatar{width:36px;height:36px;border:2px solid #fff;border-radius:3px;background:#e8f1fb;display:grid;place-items:center;box-shadow:1px 1px 1px #174b99}
+.avatar img{width:30px;height:30px}
+.smcols{display:flex;min-height:250px}
+.smleft,.smright{width:50%;padding:5px}.smleft{border-right:1px solid #ddd}
+.smitem{display:flex;align-items:center;gap:6px;padding:3px 4px;font-size:11px;line-height:14px;border-radius:2px;cursor:default}
+.smitem:hover{background:#316ac5;color:#fff}
+.smitem img{width:24px;height:24px;object-fit:contain;flex:0 0 24px}
+.smitem strong{font-weight:bold}
+.allprograms{border-top:1px solid #ddd;margin-top:3px;padding:6px 7px;text-align:right;font-weight:bold;font-size:11px}
+.allprograms:after{content:' ▶';color:#299c1d}
+.smfooter{height:34px;background:#dce9f8;display:flex;justify-content:flex-end;align-items:center;gap:4px;padding:4px}
+.smfooter button{border:0;background:transparent;font-size:10px;cursor:pointer;padding:3px 6px}
+.smfooter button:hover{background:#c5d8ef}
+
+.dialog-layer{position:fixed;inset:0 0 var(--taskbar-h);z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.18)}
+.dialog-layer.show{display:flex}
+.dialog{width:330px;max-width:calc(100vw - 20px);background:#ece9d8;border:1px solid #003c74;border-radius:7px 7px 0 0;box-shadow:2px 4px 10px rgba(0,0,0,.5);overflow:hidden}
+.dialog-title{height:25px;padding:2px 3px 2px 6px;color:#fff;font-weight:bold;font-size:11px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,#0a3a9a,#0b57ce 50%,#0a4fbd)}
+.dialog-title button{width:18px;height:17px;padding:0;color:#fff;border:1px solid #fff;border-radius:2px;background:#d0251d;font:bold 13px Arial;cursor:pointer}
+.dialog-body{padding:14px 12px 10px;background:#ece9d8}
+.dialog-row{display:flex;gap:10px;align-items:flex-start}
+.dialog-icon{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:#d0251d;color:#fff;display:grid;place-items:center;font:bold 22px Arial;box-shadow:inset 1px 1px rgba(255,255,255,.4)}
+.dialog-text{font-size:11px;line-height:15px}
+.dialog-actions{display:flex;justify-content:center;margin-top:13px}
+.dialog-actions button{min-width:72px;height:22px;border:1px solid #003c74;border-radius:2px;background:linear-gradient(#fff,#ece9d8 45%,#c8c4b0);box-shadow:inset 1px 1px #fff;font-size:11px;cursor:pointer}
+.loading-icon{width:28px;height:28px;border:3px solid #b6c8e3;border-top-color:#155bc2;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-shell{height:16px;border:1px solid #7f7f7f;background:#fff;padding:2px;margin-top:10px}
+.progress-fill{height:10px;width:0;background:repeating-linear-gradient(90deg,#245edb 0 11px,#fff 11px 14px);transition:width .12s linear}
+
+.confetti{position:fixed;inset:0 0 var(--taskbar-h);z-index:90;pointer-events:none;overflow:hidden}
+.piece{position:absolute;top:-12px;width:7px;height:11px;animation:fall linear forwards;border-radius:1px}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.1}}
+
+@media(max-width:700px){.window-wrap{width:calc(100vw - 10px)}.sidebar{display:none}.content{max-height:calc(100vh - 170px)}.startmenu{width:min(350px,100vw)}.taskitem{min-width:110px}.desktop-icon{display:none}.di-bin{display:block}.dialog{width:310px}}
 </style>
 </head>
 <body>
 <div class="desktop">
- <div class="desktop-icon di-computer"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png">Мой компьютер</div>
- <div class="desktop-icon di-docs"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png">Мои документы</div>
- <div class="desktop-icon di-ie"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/290.png">Internet Explorer</div>
- <div class="desktop-icon di-bin"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/41%2832x32%29.png">Корзина</div>
+  <div class="desktop-icon di-computer">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">
+    Мой компьютер
+  </div>
+  <div class="desktop-icon di-docs">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png" alt="">
+    Мои документы
+  </div>
+  <div class="desktop-icon di-ie">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/ie.png" alt="">
+    Internet Explorer
+  </div>
+  <div class="desktop-icon di-bin">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/550%2832x32%29.png" alt="">
+    Корзина
+  </div>
 </div>
 
 <div class="window-wrap" id="windowWrap">
- <div class="window" id="window">
-  <div class="titlebar" id="titlebar">
-   <div class="title"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png"><span>Опрос.exe</span></div>
-   <div class="controls"><button class="min" id="minBtn" aria-label="Свернуть"></button><button class="max" id="maxBtn" aria-label="Развернуть"></button><button class="close" id="closeBtn" aria-label="Закрыть"></button></div>
+  <div class="window" id="window">
+    <div class="title-bar" id="titlebar">
+      <div class="title-bar-text">
+        <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">
+        Опрос.exe
+      </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize" id="minBtn"></button>
+        <button aria-label="Maximize" id="maxBtn"></button>
+        <button aria-label="Close" id="closeBtn"></button>
+      </div>
+    </div>
+    <div class="menubar"><span>Файл</span><span>Правка</span><span>Вид</span><span>Избранное</span><span>Сервис</span><span>Справка</span></div>
+    <div class="toolbar">
+      <button class="tool" title="Назад"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/back.png" alt="">Назад</button>
+      <button class="tool" title="Вперёд"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/forward.png" alt="">Вперёд</button>
+      <div class="separator"></div>
+      <button class="tool" title="Домой"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/up.png" alt="">Домой</button>
+      <button class="tool" title="Поиск"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png" alt="">Поиск</button>
+      <button class="tool" title="Папки"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/318%2832x32%29.png" alt="">Папки</button>
+    </div>
+    <div class="address-row">
+      <span class="address-label">Адрес:</span>
+      <div class="address"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">Мой компьютер</div>
+      <button class="go-btn">Go</button>
+    </div>
+    <div class="content">
+      <aside class="sidebar">
+        <div class="sidebox"><div class="sidehead">Системные задачи</div><div class="sidebody"><div>Просмотр сведений</div><div>Установка программ</div><div>Изменение параметров</div></div></div>
+        <div class="sidebox"><div class="sidehead">Другие места</div><div class="sidebody"><div>Мои документы</div><div>Мой компьютер</div><div>Панель управления</div><div>Сетевое окружение</div></div></div>
+        <div class="sidebox"><div class="sidehead">Сведения</div><div class="sidebody sideinfo"><b>Опрос.exe</b><br>Приложение Windows XP<br>Тема Luna</div></div>
+      </aside>
+      <main class="main">
+        <p class="channel" id="channel"></p>
+        <h1 id="question"></h1>
+        <fieldset id="pollFieldset" style="border:0;padding:0;margin:0">
+          <div id="radioList"></div>
+          <div class="vote-row">
+            <button id="resultsBtn" type="button">Посмотреть результаты</button>
+            <button id="voteBtn">Проголосовать</button>
+          </div>
+          <p class="error" id="voteError"></p>
+        </fieldset>
+        <div class="results" id="results" style="display:none"></div>
+      </main>
+    </div>
+    <div class="status-bar">
+      <p class="status-bar-field" id="total">Готово</p>
+      <p class="status-bar-field">Опрос.exe</p>
+    </div>
   </div>
-  <div class="menubar"><span>Файл</span><span>Правка</span><span>Вид</span><span>Избранное</span><span>Сервис</span><span>Справка</span></div>
-  <div class="toolbar"><button class="tool"><span class="big">◀</span>Назад</button><button class="tool"><span class="big">▶</span>Вперёд</button><div class="separator"></div><button class="tool"><span class="big">⌂</span>Домой</button><button class="tool"><span class="big">🔍</span>Поиск</button><button class="tool"><span class="big">📁</span>Папки</button></div>
-  <div class="address-row"><span class="address-label">Адрес:</span><div class="address"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png">Мой компьютер</div><button class="go">Go</button></div>
-  <div class="content">
-   <aside class="sidebar">
-    <div class="sidebox"><div class="sidehead">Системные задачи</div><div class="sidebody"><div>Просмотр сведений</div><div>Установка программ</div><div>Изменение параметров</div></div></div>
-    <div class="sidebox"><div class="sidehead">Другие места</div><div class="sidebody"><div>Мои документы</div><div>Мой компьютер</div><div>Панель управления</div><div>Сетевое окружение</div></div></div>
-    <div class="sidebox"><div class="sidehead">Сведения</div><div class="sidebody sideinfo"><b>Опрос.exe</b><br>Приложение Windows XP<br>Опрос в стиле Luna</div></div>
-   </aside>
-   <main class="main">
-    <p class="channel" id="channel"></p>
-    <h1 id="question"></h1>
-    <fieldset class="poll" id="pollFieldset" style="border:0;padding:0;margin:0"><div id="radioList"></div><div class="vote-row"><button class="xpbtn" id="voteBtn">Проголосовать</button></div><p class="error" id="voteError"></p></fieldset>
-    <div class="results" id="results" style="display:none"></div>
-   </main>
-  </div>
-  <div class="status"><p id="total">Готово</p><p>Опрос.exe</p></div>
- </div>
 </div>
 
 <div class="startmenu" id="startMenu">
- <div class="smhead"><div class="avatar"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png"></div><span>Пользователь</span></div>
- <div class="smcols">
-  <div class="smleft">
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/290.png"><span><strong>Internet Explorer</strong><br>Интернет</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/299%2832x32%29.png"><span><strong>Электронная почта</strong><br>Outlook Express</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/318%2832x32%29.png"><span>Моя музыка</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/327%2832x32%29.png"><span>Мультимедиа</span></div>
-   <div class="allprograms">Все программы</div>
+  <div class="smhead">
+    <div class="avatar"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/user.png" alt=""></div>
+    <span>Пользователь</span>
   </div>
-  <div class="smright">
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png"><span>Мои документы</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/111%2832x32%29.png"><span>Мои рисунки</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png"><span>Мой компьютер</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/67%2832x32%29.png"><span>Панель управления</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png"><span>Поиск</span></div>
-   <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/74%2832x32%29.png"><span>Справка и поддержка</span></div>
+  <div class="smcols">
+    <div class="smleft">
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/ie.png" alt=""><span><strong>Internet Explorer</strong><br>Интернет</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/299%2832x32%29.png" alt=""><span><strong>Электронная почта</strong><br>Outlook Express</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/318%2832x32%29.png" alt=""><span>Моя музыка</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/327%2832x32%29.png" alt=""><span>Мультимедиа</span></div>
+      <div class="allprograms">Все программы</div>
+    </div>
+    <div class="smright">
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png" alt=""><span>Мои документы</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/111%2832x32%29.png" alt=""><span>Мои рисунки</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt=""><span>Мой компьютер</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/67%2832x32%29.png" alt=""><span>Панель управления</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png" alt=""><span>Поиск</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/74%2832x32%29.png" alt=""><span>Справка и поддержка</span></div>
+    </div>
   </div>
- </div>
- <div class="smfooter"><button>🔒 Выход из системы</button><button>⏻ Выключение</button></div>
+  <div class="smfooter"><button>🔒 Выход</button><button>⏻ Выключение</button></div>
 </div>
 
 <div class="taskbar">
- <button class="start" id="startBtn"><span class="winlogo"><i></i><i></i><i></i><i></i></span>Пуск</button>
- <div class="quick"><button title="Internet Explorer"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/290.png"></button><button title="Проводник"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png"></button></div>
- <button class="taskitem active" id="taskItem">Опрос.exe</button>
- <div class="tray"><span class="trayicon">🔊</span><span class="trayicon">🛡</span><span class="clock" id="clock">00:00</span></div>
+  <div class="taskbar-left">
+    <img class="start-img" id="startBtn" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/start.png" alt="Пуск">
+    <button class="taskitem active" id="taskItem" title="Опрос.exe — нажми, чтобы вернуть на экран">Опрос.exe</button>
+  </div>
+  <div class="taskbar-right">
+    <span class="trayicon">🔊</span>
+    <span class="trayicon">🛡</span>
+    <span class="clock" id="clock">00:00</span>
+  </div>
 </div>
 
 <div class="dialog-layer" id="dialogLayer">
- <div class="dialog" id="dialog">
-  <div class="dialog-title"><span id="dialogTitle">Опрос.exe</span><button id="dialogX">×</button></div>
-  <div class="dialog-body" id="dialogBody"></div>
- </div>
+  <div class="dialog" id="dialog">
+    <div class="dialog-title"><span id="dialogTitle">Опрос.exe</span><button id="dialogX">×</button></div>
+    <div class="dialog-body" id="dialogBody"></div>
+  </div>
 </div>
 <div class="confetti" id="confetti"></div>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-/* New poll id = clean vote state for this final build. Old v3 localStorage is ignored. */
-const CONFIG={pollId:'who-am-i-xp-classic-final',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Ненавидите меня']};
+const CONFIG={pollId:'who-am-i-xp-v2-live',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Ненавидите меня']};
 const API='https://countapi.mileshilliard.com/api/v1';
 const VOTE_KEY='voted_'+CONFIG.pollId,CHOICE_KEY='choice_'+CONFIG.pollId;
 const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
@@ -134,18 +303,41 @@ async function hitCount(i){try{const r=await fetch(API+'/hit/'+key(i));const d=a
 function showDialog(type){
  $('dialogTitle').textContent=type==='error'?'Опрос.exe':'Опрос.exe — обработка';
  $('dialogX').style.display=type==='error'?'block':'none';
- if(type==='error'){
-  dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon">×</div><div class="dialog-text">Невозможно выполнить операцию.<br><br>Сначала проголосуйте, а затем окно можно будет свернуть или закрыть.</div></div><div class="dialog-actions"><button id="dialogOk">OK</button></div>';
-  $('dialogOk').onclick=hideDialog;
- } else if(type==='loading'){
-  dialogBody.innerHTML='<div class="dialog-row"><div class="loading-icon"></div><div class="dialog-text"><b>Обработка голоса...</b><br>Пожалуйста, подождите.</div></div><div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>';
- } else {
-  dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon" style="background:#2d7d17">✓</div><div class="dialog-text"><b>Готово!</b><br><br>Ваш голос принят. Сейчас будут показаны результаты опроса.</div></div><div class="dialog-actions"><button id="doneOk">OK</button></div>';
-  $('doneOk').onclick=hideDialog;
- }
+ if(type==='error'){dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon">×</div><div class="dialog-text">Невозможно выполнить операцию.<br><br>Сначала проголосуйте, а затем окно можно будет свернуть или закрыть.</div></div><div class="dialog-actions"><button id="dialogOk">OK</button></div>';$('dialogOk').onclick=hideDialog}
+ else if(type==='loading'){dialogBody.innerHTML='<div class="dialog-row"><div class="loading-icon"></div><div class="dialog-text"><b>Обработка голоса...</b><br>Пожалуйста, подождите.</div></div><div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>'}
+ else{dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon" style="background:#2d7d17">✓</div><div class="dialog-text"><b>Готово!</b><br><br>Ваш голос принят. Сейчас будут показаны результаты опроса.</div></div><div class="dialog-actions"><button id="doneOk">OK</button></div>';$('doneOk').onclick=hideDialog}
  dialogLayer.classList.add('show');
 }
 function hideDialog(){dialogLayer.classList.remove('show')}
+
+const RESULTS_PASSWORD = '676988';
+
+function showPasswordDialog() {
+  $('dialogTitle').textContent = 'Опрос.exe';
+  $('dialogX').style.display = 'block';
+  dialogBody.innerHTML = '<div class="dialog-row"><div class="dialog-icon" style="background:#1f5ed2;font-size:18px">🔑</div><div class="dialog-text"><b>Введите пароль</b><br>для просмотра результатов опроса.<br><br><input type="password" id="pwdInput" style="width:180px;padding:3px 5px;border:1px solid #7f9db9;font-family:Tahoma;font-size:12px" placeholder="Пароль" autocomplete="off"></div></div><div class="dialog-actions"><button id="pwdOk">OK</button><button id="pwdCancel" style="margin-left:8px">Отмена</button></div>';
+  dialogLayer.classList.add('show');
+  const input = $('pwdInput');
+  if (input) {
+    setTimeout(() => input.focus(), 50);
+    input.onkeydown = (e) => { if (e.key === 'Enter') $('pwdOk').click(); };
+  }
+  $('pwdOk').onclick = () => {
+    const val = ($('pwdInput') && $('pwdInput').value) || '';
+    if (val === RESULTS_PASSWORD) {
+      hideDialog();
+      renderResults(-1, null).then(() => {
+        /* show results without marking as voted */
+      });
+    } else {
+      alert('Неверный пароль');
+      if ($('pwdInput')) { $('pwdInput').value = ''; $('pwdInput').focus(); }
+    }
+  };
+  $('pwdCancel').onclick = hideDialog;
+}
+
+
 $('dialogX').onclick=hideDialog;
 dialogLayer.addEventListener('click',e=>{if(e.target===dialogLayer&&$('dialogOk'))hideDialog()});
 async function renderResults(chosen,known){
@@ -161,39 +353,49 @@ async function finishVote(index){
  if(tg&&tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
  showDialog('loading');
  const fill=$('progressFill');
- let progress=0;const timer=setInterval(()=>{progress=Math.min(92,progress+Math.random()*17);if(fill)fill.style.width=progress+'%'},130);
+ let progress=0;const timer=setInterval(()=>{progress=Math.min(92,progress+Math.random()*16);if(fill)fill.style.width=progress+'%'},120);
  const value=await hitCount(index);
  clearInterval(timer);if(fill)fill.style.width='100%';
- await new Promise(r=>setTimeout(r,260));
+ await new Promise(r=>setTimeout(r,220));
  localStorage.setItem(VOTE_KEY,'1');localStorage.setItem(CHOICE_KEY,String(index));
  showDialog('done');
- await new Promise(r=>setTimeout(r,750));
+ await new Promise(r=>setTimeout(r,700));
  hideDialog();
  await renderResults(index,value);
  enablePostVote();
  launchConfetti();showShare(index);
  if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');
 }
+
+const resultsBtn = $('resultsBtn');
+if (resultsBtn) {
+  resultsBtn.addEventListener('click', () => {
+    if (voted()) {
+      const chosen = parseInt(localStorage.getItem(CHOICE_KEY), 10);
+      renderResults(isNaN(chosen) ? -1 : chosen, null);
+    } else {
+      showPasswordDialog();
+    }
+  });
+}
+
 vote.addEventListener('click',()=>{const checked=document.querySelector('input[name="poll-option"]:checked');if(!checked){err.textContent='Сначала выбери вариант';return}err.textContent='';finishVote(+checked.value)});
 function showShare(index){if(!tg||!tg.MainButton)return;const text='Проголосовал(а) в опросе '+CONFIG.channelName+': «'+CONFIG.question+'» — мой ответ: «'+CONFIG.options[index]+'»';tg.MainButton.setText('Поделиться результатом');tg.MainButton.setParams({color:'#1f4fd6',text_color:'#fff'});tg.MainButton.show();tg.MainButton.onClick(()=>tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(text)))}
-function launchConfetti(){const layer=$('confetti');const colors=['#3a86ff','#1f4fd6','#5ecb3f','#f2c94c','#f33'];for(let i=0;i<42;i++){const p=document.createElement('span');p.className='piece';p.style.left=Math.random()*100+'vw';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDuration=2.2+Math.random()*1.5+'s';p.style.animationDelay=Math.random()*.25+'s';layer.appendChild(p);setTimeout(()=>p.remove(),4200)}}
+function launchConfetti(){const layer=$('confetti');const colors=['#3a86ff','#1f4fd6','#5ecb3f','#f2c94c','#f33'];for(let i=0;i<28;i++){const p=document.createElement('span');p.className='piece';p.style.left=Math.random()*100+'vw';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDuration=2.1+Math.random()*1.4+'s';p.style.animationDelay=Math.random()*.2+'s';layer.appendChild(p);setTimeout(()=>p.remove(),4000)}}
 function showBlocked(){showDialog('error');if(tg&&tg.HapticFeedback)tg.HapticFeedback.notificationOccurred('warning')}
 function setMinimized(on){if(on){wrap.classList.add('minimized');$('taskItem').classList.remove('active')}else{wrap.classList.remove('minimized');$('taskItem').classList.add('active')}}
-function toggleMax(){if(!voted()){}win.classList.toggle('maximized');}
-function enablePostVote(){
- $('minBtn').disabled=false;$('closeBtn').disabled=false;wrap.dataset.draggable='1';
-}
-/* Reset any old local state from earlier builds, while preserving this build's fresh key. */
-['voted_who-am-i-xp-classic-v3','choice_who-am-i-xp-classic-v3','voted_who-am-i-xp-classic-v4','choice_who-am-i-xp-classic-v4'].forEach(k=>localStorage.removeItem(k));
+function toggleMax(){win.classList.toggle('maximized')}
+function enablePostVote(){$('minBtn').disabled=false;$('closeBtn').disabled=false;wrap.dataset.draggable='1'}
+[].forEach(k=>localStorage.removeItem(k));
 if(voted()){const chosen=parseInt(localStorage.getItem(CHOICE_KEY),10)||0;renderResults(chosen,null).then(()=>{enablePostVote();showShare(chosen)})}
 $('closeBtn').addEventListener('click',e=>{e.preventDefault();if(!voted()){showBlocked();return}setMinimized(true)});
 $('minBtn').addEventListener('click',e=>{e.preventDefault();if(!voted()){showBlocked();return}setMinimized(true)});
 $('maxBtn').addEventListener('click',()=>toggleMax());
 $('taskItem').addEventListener('click',()=>{setMinimized(false);$('startMenu').classList.remove('open')});
-$('startBtn').addEventListener('click',e=>{e.stopPropagation();$('startMenu').classList.toggle('open')});document.addEventListener('click',e=>{if(!$('startMenu').contains(e.target)&&e.target!==$('startBtn'))$('startMenu').classList.remove('open')});
-/* Window dragging is intentionally locked until the vote is accepted. */
+$('startBtn').addEventListener('click',e=>{e.stopPropagation();$('startMenu').classList.toggle('open')});
+document.addEventListener('click',e=>{if(!$('startMenu').contains(e.target)&&e.target!==$('startBtn'))$('startMenu').classList.remove('open')});
 let drag=false,dx=0,dy=0;
-$('titlebar').addEventListener('pointerdown',e=>{if(!voted()||win.classList.contains('maximized')||e.target.closest('.controls'))return;drag=true;const r=wrap.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;$('titlebar').setPointerCapture(e.pointerId)});
+$('titlebar').addEventListener('pointerdown',e=>{if(!voted()||win.classList.contains('maximized')||e.target.closest('.title-bar-controls'))return;drag=true;const r=wrap.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;$('titlebar').setPointerCapture(e.pointerId)});
 $('titlebar').addEventListener('pointermove',e=>{if(!drag)return;wrap.style.left=(e.clientX-dx)+'px';wrap.style.top=(e.clientY-dy)+'px';wrap.style.transform='none'});
 $('titlebar').addEventListener('pointerup',()=>drag=false);$('titlebar').addEventListener('pointercancel',()=>drag=false);
 document.querySelectorAll('.desktop-icon').forEach(icon=>icon.addEventListener('click',e=>{e.stopPropagation();document.querySelectorAll('.desktop-icon').forEach(x=>x.classList.remove('selected'));icon.classList.add('selected')}));
