@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Опрос.exe</title>
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png">
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png">
 <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.6/dist/XP.css">
 <style>
 :root{--taskbar-h:30px;--font:Tahoma,"MS Sans Serif",Arial,sans-serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);font-size:11px;color:#000}
-body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bliss_%28Windows_XP%29.png/1280px-Bliss_%28Windows_XP%29.png') center center/cover no-repeat fixed}
+body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Bliss_(Windows_XP).png?width=1600') center center/cover no-repeat fixed}
 
 .desktop{position:fixed;inset:0 0 var(--taskbar-h);z-index:1}
 .desktop-icon{position:absolute;width:75px;text-align:center;color:#fff;font-size:11px;line-height:13px;text-shadow:1px 1px 2px #000;padding:4px 2px;border:1px solid transparent;user-select:none;cursor:default}
@@ -96,12 +96,14 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 .start-img:hover{filter:brightness(105%)}
 .start-img:active{filter:brightness(85%)}
 .taskitem{
-  flex:0 1 auto;min-width:120px;max-width:160px;color:#fff;border-radius:2px;margin:2px 0 0 4px;padding:0 8px 0 6px;height:22px;font-size:11px;
-  background-color:#3c81f3;box-shadow:inset -1px 0 rgba(0,0,0,.3),inset 1px 1px 1px rgba(255,255,255,.2);
-  position:relative;display:flex;align-items:center;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;
+  flex:0 1 auto;min-width:120px;max-width:160px;color:#fff;border-radius:3px;margin:2px 0 0 4px;padding:0 8px 0 4px;height:22px;font-size:11px;
+  background:linear-gradient(to bottom,#5e9dfb 0%,#3c81f3 45%,#2f6ee0 100%);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.35),inset -1px -1px 0 rgba(0,0,0,.25);
+  position:relative;display:flex;align-items:center;gap:5px;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:none;
 }
-.taskitem:hover{background-color:#53a3ff}
-.taskitem.active{background-color:#1e52b7;box-shadow:inset 0 0 1px 1px rgba(0,0,0,.3),inset 1px 0 1px rgba(0,0,0,.7)}
+.taskitem img{width:16px;height:16px;flex:0 0 16px;object-fit:contain}
+.taskitem:hover{background:linear-gradient(to bottom,#6fa8fb,#4a8bf5 45%,#3878e6 100%)}
+.taskitem.active{background:linear-gradient(to bottom,#1c56c9,#1e52b7 45%,#164294 100%);box-shadow:inset 1px 1px 2px rgba(0,0,0,.5),inset -1px 0 0 rgba(255,255,255,.15)}
 .trayicon{font-size:12px;margin-right:6px}
 .clock{font-size:11px;color:#fff}
 
@@ -120,7 +122,8 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 .allprograms{border-top:1px solid #ddd;margin-top:3px;padding:6px 7px;text-align:right;font-weight:bold;font-size:11px}
 .allprograms:after{content:' ▶';color:#299c1d}
 .smfooter{height:34px;background:#dce9f8;display:flex;justify-content:flex-end;align-items:center;gap:4px;padding:4px}
-.smfooter button{border:0;background:transparent;font-size:10px;cursor:pointer;padding:3px 6px}
+.smfooter button{border:0;background:transparent;font-size:10px;cursor:pointer;padding:3px 6px;display:flex;align-items:center;gap:4px}
+.smfooter button img{width:16px;height:16px}
 .smfooter button:hover{background:#c5d8ef}
 
 .dialog-layer{position:fixed;inset:0 0 var(--taskbar-h);z-index:100;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.18)}
@@ -149,11 +152,11 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 <body>
 <div class="desktop">
   <div class="desktop-icon di-computer">
-    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt="">
     Мой компьютер
   </div>
   <div class="desktop-icon di-docs">
-    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png" alt="">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/308%2832x32%29.png" alt="">
     Мои документы
   </div>
   <div class="desktop-icon di-ie">
@@ -161,7 +164,7 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
     Internet Explorer
   </div>
   <div class="desktop-icon di-bin">
-    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/550%2832x32%29.png" alt="">
+    <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/360%2832x32%29.png" alt="">
     Корзина
   </div>
 </div>
@@ -170,7 +173,7 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
   <div class="window" id="window">
     <div class="title-bar" id="titlebar">
       <div class="title-bar-text">
-        <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">
+        <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt="">
         Опрос.exe
       </div>
       <div class="title-bar-controls">
@@ -185,12 +188,12 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
       <button class="tool" type="button" title="Вперёд"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/forward.png" alt="">Вперёд</button>
       <div class="separator"></div>
       <button class="tool" type="button" title="Домой"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/up.png" alt="">Домой</button>
-      <button class="tool" type="button" title="Поиск"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png" alt="">Поиск</button>
+      <button class="tool" type="button" title="Поиск"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/299%2832x32%29.png" alt="">Поиск</button>
       <button class="tool" type="button" title="Папки"><img class="tool-icon" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/318%2832x32%29.png" alt="">Папки</button>
     </div>
     <div class="address-row">
       <span class="address-label">Адрес:</span>
-      <div class="address"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt="">Мой компьютер</div>
+      <div class="address"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt="">Мой компьютер</div>
       <button class="go-btn" type="button">Go</button>
     </div>
     <div class="content">
@@ -228,27 +231,28 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
   <div class="smcols">
     <div class="smleft">
       <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/ie.png" alt=""><span><strong>Internet Explorer</strong><br>Интернет</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/299%2832x32%29.png" alt=""><span><strong>Электронная почта</strong><br>Outlook Express</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/318%2832x32%29.png" alt=""><span>Моя музыка</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/327%2832x32%29.png" alt=""><span>Мультимедиа</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/550%2832x32%29.png" alt=""><span>Моя музыка</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/551%2832x32%29.png" alt=""><span>Мультимедиа</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/327%2832x32%29.png" alt=""><span>Блокнот</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/74%2832x32%29.png" alt=""><span>Калькулятор</span></div>
       <div class="allprograms">Все программы</div>
     </div>
     <div class="smright">
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/147%2832x32%29.png" alt=""><span>Мои документы</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/111%2832x32%29.png" alt=""><span>Мои рисунки</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/17%2832x32%29.png" alt=""><span>Мой компьютер</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/308%2832x32%29.png" alt=""><span>Мои документы</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png" alt=""><span>Мои рисунки</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt=""><span>Мой компьютер</span></div>
       <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/67%2832x32%29.png" alt=""><span>Панель управления</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/289%2832x32%29.png" alt=""><span>Поиск</span></div>
-      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/74%2832x32%29.png" alt=""><span>Справка и поддержка</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/299%2832x32%29.png" alt=""><span>Поиск</span></div>
+      <div class="smitem"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/747%2832x32%29.png" alt=""><span>Справка и поддержка</span></div>
     </div>
   </div>
-  <div class="smfooter"><button type="button">🔒 Выход</button><button type="button">⏻ Выключение</button></div>
+  <div class="smfooter"><button type="button">🔒 Выход</button><button type="button"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/310%2832x32%29.png" alt="">Выключение</button></div>
 </div>
 
 <div class="taskbar">
   <div class="taskbar-left">
     <img class="start-img" id="startBtn" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/start.png" alt="Пуск">
-    <button class="taskitem active" id="taskItem" type="button" title="Опрос.exe — нажми, чтобы вернуть на экран">Опрос.exe</button>
+    <button class="taskitem active" id="taskItem" type="button" title="Опрос.exe — нажми, чтобы вернуть на экран"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt="">Опрос.exe</button>
   </div>
   <div class="taskbar-right">
     <span class="trayicon">🔊</span>
@@ -267,12 +271,13 @@ body{background:#5ba3d9 url('https://upload.wikimedia.org/wikipedia/en/thumb/1/1
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-const CONFIG={pollId:'who-am-i-xp-v2-live',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Ненавидите меня']};
+const CONFIG={pollId:'who-am-i-xp-release-2026',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Незнакомец','Ненавидите меня']};
 const API='https://countapi.mileshilliard.com/api/v1';
 const VOTE_KEY='voted_'+CONFIG.pollId,CHOICE_KEY='choice_'+CONFIG.pollId;
 const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
 if(tg){tg.ready();tg.expand();try{tg.setBackgroundColor('#245edb');tg.setHeaderColor('#245edb')}catch(e){}}
 const $=id=>document.getElementById(id),wrap=$('windowWrap'),win=$('window'),field=$('pollFieldset'),results=$('results'),vote=$('voteBtn'),err=$('voteError'),dialogLayer=$('dialogLayer'),dialogBody=$('dialogBody');
+const errorSound=new Audio('https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/sounds/error.wav');
 $('channel').textContent=CONFIG.channelName;$('question').textContent=CONFIG.question;
 CONFIG.options.forEach((label,i)=>{const row=document.createElement('div');row.className='choice';row.innerHTML='<input type="radio" name="poll-option" id="opt'+i+'" value="'+i+'"><label for="opt'+i+'">'+label+'</label>';$('radioList').appendChild(row)});
 function key(i){return CONFIG.pollId+'_opt'+i}
@@ -284,8 +289,9 @@ function showDialog(type){
  const isDismissible=type==='error'||type==='vote-error';
  $('dialogTitle').textContent=isDismissible?'Опрос.exe':'Опрос.exe — обработка';
  $('dialogX').style.display=isDismissible?'block':'none';
- if(type==='error'){dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon">×</div><div class="dialog-text">Невозможно выполнить операцию.<br><br>Сначала проголосуйте, а затем окно можно будет свернуть или закрыть.</div></div><div class="dialog-actions"><button id="dialogOk" type="button">OK</button></div>';$('dialogOk').onclick=hideDialog}
- else if(type==='vote-error'){dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon">×</div><div class="dialog-text">Не удалось отправить голос.<br><br>Проверьте соединение с интернетом и попробуйте ещё раз.</div></div><div class="dialog-actions"><button id="dialogOk" type="button">OK</button></div>';$('dialogOk').onclick=hideDialog}
+ if(isDismissible){try{errorSound.currentTime=0;errorSound.play().catch(()=>{})}catch(e){}}
+ if(type==='error'){dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon" style="background:transparent;box-shadow:none"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/897%2832x32%29.png" alt="" style="width:32px;height:32px"></div><div class="dialog-text">Невозможно выполнить операцию.<br><br>Сначала проголосуйте, а затем окно можно будет свернуть или закрыть.</div></div><div class="dialog-actions"><button id="dialogOk" type="button">OK</button></div>';$('dialogOk').onclick=hideDialog}
+ else if(type==='vote-error'){dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon" style="background:transparent;box-shadow:none"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/897%2832x32%29.png" alt="" style="width:32px;height:32px"></div><div class="dialog-text">Не удалось отправить голос.<br><br>Проверьте соединение с интернетом и попробуйте ещё раз.</div></div><div class="dialog-actions"><button id="dialogOk" type="button">OK</button></div>';$('dialogOk').onclick=hideDialog}
  else if(type==='loading'){dialogBody.innerHTML='<div class="dialog-row"><div class="loading-icon"></div><div class="dialog-text"><b>Обработка голоса...</b><br>Пожалуйста, подождите.</div></div><div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>'}
  else{dialogBody.innerHTML='<div class="dialog-row"><div class="dialog-icon" style="background:#2d7d17">✓</div><div class="dialog-text"><b>Готово!</b><br><br>Ваш голос принят. Сейчас будут показаны результаты опроса.</div></div><div class="dialog-actions"><button id="doneOk" type="button">OK</button></div>';$('doneOk').onclick=hideDialog}
  dialogLayer.classList.add('show');
