@@ -301,7 +301,7 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-const CONFIG={pollId:'who-am-i-xp-release-1-0-1',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Незнакомец','Учимся вместе']};
+const CONFIG={pollId:'who-am-i-xp-release-monaxcvd',channelName:'@monaxcvd_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Незнакомец','Учимся вместе']};
 const API='https://countapi.mileshilliard.com/api/v1';
 const VOTE_KEY='voted_'+CONFIG.pollId,CHOICE_KEY='choice_'+CONFIG.pollId,PWD_KEY='pwdview_'+CONFIG.pollId;
 const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
@@ -335,11 +335,10 @@ CONFIG.options.forEach((label,i)=>{const row=document.createElement('div');row.c
 
 // Vote keys are tied to a stable numeric id per option, NOT to array
 // position - so retiring an option and adding a new one in the same slot
-// never leaks the old option's accumulated votes onto the new one. When an
-// option is retired, remove it from CONFIG.options but DON'T reuse or
-// remove its id below; any replacement option gets the next unused id.
-// id 5 = retired 'Ненавидите меня' (was live under this pollId - do not reuse).
-const OPTION_KEY_IDS=[0,1,2,3,4,6];
+// never leaks the old option's accumulated votes onto the new one. This
+// poll has no retired option yet, so it's a plain 1:1 mapping for now -
+// keep this pattern if an option is ever swapped later.
+const OPTION_KEY_IDS=[0,1,2,3,4,5];
 function key(i){return CONFIG.pollId+'_opt'+OPTION_KEY_IDS[i]}
 function clock(){const d=new Date();$('clock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}clock();setInterval(clock,15000);
 function voted(){return localStorage.getItem(VOTE_KEY)==='1'}
