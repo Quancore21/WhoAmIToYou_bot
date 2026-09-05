@@ -18,7 +18,7 @@
      downloading immediately instead of waiting for the CSS to be parsed
      and applied before the browser even discovers it's needed. -->
 <link rel="preload" as="image" fetchpriority="high" href="https://en.wikipedia.org/wiki/Special:FilePath/Bliss_(Windows_XP).png?width=1920">
-<title>Мой компьютер [BETA 1.1 NoRC]</title>
+<title>Мой компьютер [BETA 1.1 RC]</title>
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png">
 <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.6/dist/XP.css">
 <style>
@@ -45,17 +45,17 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
 .window-wrap .window{width:100%;box-shadow:2px 3px 10px rgba(0,0,0,.45)!important}
 .window-wrap.maximized .window{height:100%}
 
-.calc-wrap{width:auto;max-width:calc(100vw - 16px);left:56%;top:44%;z-index:15;display:none}
+.calc-wrap{left:50%;top:50%;width:min(260px,calc(100vw - 24px));max-width:none;z-index:15;display:none}
 .calc-wrap.open{display:block}
-.calc-wrap .window{width:auto}
-.calc-body{padding:8px;background:#ece9d8;width:242px;max-width:calc(100vw - 40px)}
+.calc-wrap .window{width:100%}
+.calc-body{padding:8px;background:#ece9d8;width:100%;box-sizing:border-box}
 .calc-display{
-  height:30px;margin-bottom:6px;padding:4px 6px;background:#fff;border:1px solid #7f9db9;
+  min-height:30px;margin-bottom:6px;padding:4px 6px;background:#fff;border:1px solid #7f9db9;
   box-shadow:inset 1px 1px 2px rgba(0,0,0,.25);
   font-family:Tahoma,sans-serif;font-size:17px;text-align:right;overflow:hidden;
   white-space:nowrap;position:relative;display:flex;align-items:center;justify-content:flex-end;
 }
-.calc-display.calc-err{font-size:11px}
+.calc-display.calc-err{font-size:10px;line-height:12px;white-space:normal;padding:6px;text-align:right}
 .calc-mem-ind{position:absolute;left:6px;font-size:11px;font-weight:bold;color:#333;visibility:hidden}
 .calc-mem-ind.show{visibility:visible}
 .calc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
@@ -198,7 +198,31 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
      never sees icons/wallpaper popping in piece by piece. Real asset
      loading is tracked in JS below (not a fixed guess-timer). -->
 <div id="bootScreen">
-  <img src="https://raw.githubusercontent.com/Quancore21/WhoAmIToYou_bot/main/Assets/IMG_4043.gif" alt="Загрузка Windows">
+  <img id="bootGif" src="https://raw.githubusercontent.com/Quancore21/WhoAmIToYou_bot/main/Assets/IMG_4043.gif" alt="Загрузка Windows">
+  <div class="dialog" id="betaGate" style="display:none">
+    <div class="dialog-title"><span>Бета-версия</span></div>
+    <div class="dialog-body">
+      <div class="dialog-row">
+        <div class="dialog-icon" style="background:transparent">
+          <img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/747%2832x32%29.png" alt="" style="width:32px;height:32px">
+        </div>
+        <div class="dialog-text">Это бета-версия приложения.<br><br>Некоторые функции могут работать нестабильно или измениться позже. Продолжить?</div>
+      </div>
+      <div class="dialog-actions">
+        <button id="betaAccept" type="button">Принять</button>
+        <button id="betaDecline" type="button" style="margin-left:8px">Отклонить</button>
+      </div>
+    </div>
+  </div>
+  <div class="dialog" id="betaBye" style="display:none">
+    <div class="dialog-title"><span>Бета-версия</span></div>
+    <div class="dialog-body">
+      <div class="dialog-row">
+        <div class="dialog-icon">×</div>
+        <div class="dialog-text">Спасибо за уделённое время!<br><br>Похоже, бета-версия сейчас не для вас — заходите в другой раз 🙂</div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="desktop">
   <div class="desktop-icon di-computer">
@@ -374,6 +398,12 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
 const CONFIG={pollId:'who-am-i-xp-release-1-0-1',channelName:'@opupevshiy_600321',question:'Кем я для вас являюсь?',options:['Друг','Возлюбленный','Знакомый','Хотите познакомиться','Незнакомец','Учимся вместе']};
 const API='https://countapi.mileshilliard.com/api/v1';
 const VOTE_KEY='voted_'+CONFIG.pollId,CHOICE_KEY='choice_'+CONFIG.pollId,PWD_KEY='pwdview_'+CONFIG.pollId;
+// Some embedded WebView contexts (private browsing, restricted storage
+// policies) can make localStorage throw instead of just being unavailable.
+// Wrapped so that case degrades to "can't remember your vote/session" -
+// annoying, but the app keeps working - rather than crashing init outright.
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 const tg=window.Telegram&&window.Telegram.WebApp?window.Telegram.WebApp:null;
 if(tg){tg.ready();tg.expand();try{tg.setBackgroundColor('#245edb');tg.setHeaderColor('#245edb')}catch(e){}}
 const $=id=>document.getElementById(id),wrap=$('windowWrap'),win=$('window'),field=$('pollFieldset'),results=$('results'),vote=$('voteBtn'),err=$('voteError'),dialogLayer=$('dialogLayer'),dialogBody=$('dialogBody');
@@ -399,7 +429,29 @@ CONFIG.options.forEach((label,i)=>{const row=document.createElement('div');row.c
  ];
  Promise.race([Promise.all(assetPromises),new Promise(res=>setTimeout(res,MAX_MS))]).then(()=>{
   const wait=Math.max(0,MIN_MS-(Date.now()-started));
-  setTimeout(()=>{const b=$('bootScreen');if(b){b.classList.add('hide');setTimeout(()=>b.remove(),400)}},wait);
+  setTimeout(()=>{
+   const gif=$('bootGif'),gate=$('betaGate');
+   if(gif)gif.style.display='none';
+   if(gate)gate.style.display='block';
+  },wait);
+ });
+})();
+
+// Beta-only consent gate: shown once loading finishes, blocks entry until
+// answered. Accept reveals the desktop as normal; Decline shows a goodbye
+// screen and never reveals it. This entire block does not exist in the
+// release build.
+(function(){
+ const betaGate=$('betaGate'),betaBye=$('betaBye');
+ if(!betaGate)return;
+ $('betaAccept').addEventListener('click',()=>{
+  betaGate.style.display='none';
+  const b=$('bootScreen');
+  if(b){b.classList.add('hide');setTimeout(()=>b.remove(),400)}
+ });
+ $('betaDecline').addEventListener('click',()=>{
+  betaGate.style.display='none';
+  if(betaBye)betaBye.style.display='block';
  });
 })();
 
@@ -413,14 +465,14 @@ CONFIG.options.forEach((label,i)=>{const row=document.createElement('div');row.c
 const OPTION_KEY_IDS=[0,1,2,3,4,6];
 function key(i){return CONFIG.pollId+'_opt'+OPTION_KEY_IDS[i]}
 function clock(){const d=new Date();$('clock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}clock();setInterval(clock,15000);
-function voted(){return localStorage.getItem(VOTE_KEY)==='1'}
+function voted(){return lsGet(VOTE_KEY)==='1'}
 // Viewing results via password is deliberately NOT the same thing as voting -
 // it never touches VOTE_KEY/CHOICE_KEY or hits the counter. This flag only
 // grants the same *UI* access (drag/close/minimize/results), kept separate
 // so a password peek can never be mistaken for - or counted as - a vote.
-function pwdUnlocked(){return localStorage.getItem(PWD_KEY)==='1'}
+function pwdUnlocked(){return lsGet(PWD_KEY)==='1'}
 function hasAccess(){return voted()||pwdUnlocked()}
-async function getCount(i){try{const r=await fetch(API+'/get/'+key(i));if(!r.ok)return null;const d=await r.json();const n=parseInt(d&&d.value,10);return Number.isFinite(n)?n:null}catch(e){return null}}
+async function getCount(i){try{const r=await fetch(API+'/get/'+key(i));if(r.status===404)return 0;if(!r.ok)return null;const d=await r.json();const n=parseInt(d&&d.value,10);return Number.isFinite(n)?n:null}catch(e){return null}}
 async function hitCount(i){try{const r=await fetch(API+'/hit/'+key(i));if(!r.ok)return null;const d=await r.json();const n=parseInt(d&&d.value,10);return Number.isFinite(n)?n:null}catch(e){return null}}
 function showDialog(type){
  const isDismissible=type==='error'||type==='vote-error';
@@ -451,7 +503,7 @@ function showPasswordDialog() {
     const val = ($('pwdInput') && $('pwdInput').value) || '';
     if (val === RESULTS_PASSWORD) {
       hideDialog();
-      localStorage.setItem(PWD_KEY, '1'); // UI-access only - never touches VOTE_KEY/CHOICE_KEY, never hits the counter
+      lsSet(PWD_KEY, '1'); // UI-access only - never touches VOTE_KEY/CHOICE_KEY, never hits the counter
       renderResults(-1, null).then(() => {
         enablePostVote(); // same window unlocks as after voting (drag/close/minimize) - no confetti/share, nothing was voted
       });
@@ -506,7 +558,7 @@ async function finishVote(index){
  }
  if(fill)fill.style.width='100%';
  await new Promise(r=>setTimeout(r,220));
- localStorage.setItem(VOTE_KEY,'1');localStorage.setItem(CHOICE_KEY,String(index));
+ lsSet(VOTE_KEY,'1');lsSet(CHOICE_KEY,String(index));
  showDialog('done');
  await new Promise(r=>setTimeout(r,700));
  hideDialog();
@@ -520,7 +572,7 @@ const resultsBtn = $('resultsBtn');
 if (resultsBtn) {
   resultsBtn.addEventListener('click', () => {
     if (voted()) {
-      const chosen = parseInt(localStorage.getItem(CHOICE_KEY), 10);
+      const chosen = parseInt(lsGet(CHOICE_KEY), 10);
       renderResults(isNaN(chosen) ? -1 : chosen, null);
     } else if (pwdUnlocked()) {
       renderResults(-1, null);
@@ -552,7 +604,7 @@ function toggleMax(){
  }
 }
 function enablePostVote(){$('minBtn').disabled=false;$('closeBtn').disabled=false}
-if(voted()){const chosen=parseInt(localStorage.getItem(CHOICE_KEY),10)||0;renderResults(chosen,null).then(()=>{enablePostVote();showShare(chosen)})}
+if(voted()){const chosen=parseInt(lsGet(CHOICE_KEY),10)||0;renderResults(chosen,null).then(()=>{enablePostVote();showShare(chosen)})}
 else if(pwdUnlocked()){renderResults(-1,null).then(()=>{enablePostVote()})}
 $('closeBtn').addEventListener('click',e=>{e.preventDefault();if(!hasAccess()){showBlocked();return}setMinimized(true)});
 $('minBtn').addEventListener('click',e=>{e.preventDefault();if(!hasAccess()){showBlocked();return}setMinimized(true)});
