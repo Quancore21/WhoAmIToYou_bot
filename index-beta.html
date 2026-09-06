@@ -56,8 +56,7 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
   white-space:nowrap;position:relative;display:flex;align-items:center;justify-content:flex-end;
 }
 .calc-display.calc-err{font-size:10px;line-height:12px;white-space:normal;padding:6px;text-align:right}
-.calc-mem-ind{position:absolute;left:6px;font-size:11px;font-weight:bold;color:#333;visibility:hidden}
-.calc-mem-ind.show{visibility:visible}
+.calc-mem-box{height:26px;border:1px solid #7f9db9;background:#fff;box-shadow:inset 1px 1px 2px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#333}
 .calc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
 .calc-btn{min-width:0!important;width:100%!important;height:26px!important;min-height:0!important;padding:0!important;font-size:11px!important;box-sizing:border-box}
 .calc-row1-start{grid-column:2/5}
@@ -329,13 +328,16 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
         Калькулятор
       </div>
       <div class="title-bar-controls">
+        <button aria-label="Minimize" id="calcMinBtn" type="button"></button>
+        <button aria-label="Maximize" id="calcMaxBtn" type="button"></button>
         <button aria-label="Close" id="calcCloseBtn" type="button"></button>
       </div>
     </div>
     <div class="menubar"><span>Правка</span><span>Вид</span><span>Справка</span></div>
     <div class="calc-body">
-      <div class="calc-display" id="calcDisplay"><span class="calc-mem-ind" id="calcMemInd">M</span><span id="calcNum">0</span></div>
+      <div class="calc-display" id="calcDisplay"><span id="calcNum">0</span></div>
       <div class="calc-grid">
+        <div class="calc-mem-box" id="calcMemBox"></div>
         <button class="calc-btn calc-row1-start" type="button" data-act="backspace">Backspace</button>
         <button class="calc-btn" type="button" data-act="ce">CE</button>
         <button class="calc-btn" type="button" data-act="c">C</button>
@@ -376,6 +378,7 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
   <div class="taskbar-left">
     <img class="start-img" id="startBtn" src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/start.png" alt="Пуск">
     <button class="taskitem active" id="taskItem" type="button" title="Мой компьютер — нажми, чтобы вернуть на экран"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/676%2832x32%29.png" alt="">Мой компьютер</button>
+    <button class="taskitem active" id="calcTaskItem" type="button" style="display:none" title="Калькулятор — нажми, чтобы вернуть на экран"><img src="https://raw.githubusercontent.com/ShizukuIchi/winXP/master/src/assets/windowsIcons/74%2832x32%29.png" alt="">Калькулятор</button>
   </div>
   <div class="taskbar-right">
     <span class="trayicon">🔊</span>
@@ -625,10 +628,10 @@ document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEvent
 
 // --- Calculator: a real, working app (not decorative like the rest) ------
 (function(){
- const calcWrap=$('calcWrap'),calcDisplay=$('calcDisplay'),calcNum=$('calcNum'),memInd=$('calcMemInd'),calcTitlebar=$('calcTitlebar');
+ const calcWrap=$('calcWrap'),calcDisplay=$('calcDisplay'),calcNum=$('calcNum'),memBox=$('calcMemBox'),calcTitlebar=$('calcTitlebar');
  let display='0',stored=null,pendingOp=null,memory=0,resetNext=true,errored=false;
 
- function refresh(){calcDisplay.classList.toggle('calc-err',errored);calcNum.textContent=display;memInd.classList.toggle('show',memory!==0)}
+ function refresh(){calcDisplay.classList.toggle('calc-err',errored);calcNum.textContent=display;memBox.textContent=memory!==0?'M':''}
  function fmt(n){ // null return = "not a real number", caller shows an error instead of NaN/Infinity
   if(!isFinite(n))return null;
   let s=String(parseFloat(n.toPrecision(12)));
@@ -684,8 +687,16 @@ document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEvent
  }
  function sign(){if(errored)return;if(display!=='0')display=display.startsWith('-')?display.slice(1):'-'+display;refresh()}
 
- $('calcOpen').addEventListener('click',()=>{$('startMenu').classList.remove('open');calcWrap.classList.add('open');clearAll()});
- $('calcCloseBtn').addEventListener('click',e=>{e.preventDefault();calcWrap.classList.remove('open')});
+ const calcTaskItem=$('calcTaskItem');
+ $('calcOpen').addEventListener('click',()=>{$('startMenu').classList.remove('open');calcWrap.classList.add('open');calcTaskItem.style.display='';clearAll()});
+ $('calcCloseBtn').addEventListener('click',e=>{e.preventDefault();calcWrap.classList.remove('open');calcTaskItem.style.display='none'});
+ $('calcMinBtn').addEventListener('click',e=>{e.preventDefault();calcWrap.classList.remove('open');calcTaskItem.classList.remove('active')});
+ // Maximize button shown for visual accuracy (the real calculator's title
+ // bar has one too) but intentionally does nothing - a fixed button grid
+ // doesn't make sense stretched to fill the screen, and the real app's
+ // calculator window isn't meaningfully resizable either.
+ $('calcMaxBtn').addEventListener('click',e=>e.preventDefault());
+ calcTaskItem.addEventListener('click',()=>{calcWrap.classList.add('open');calcTaskItem.classList.add('active')});
 
  document.querySelector('.calc-grid').addEventListener('click',e=>{
   const btn=e.target.closest('button');if(!btn)return;
