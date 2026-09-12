@@ -45,8 +45,10 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
 .window-wrap .window{width:100%;box-shadow:2px 3px 10px rgba(0,0,0,.45)!important}
 .window-wrap.maximized .window{height:100%}
 
-.calc-wrap{left:50%;top:50%;width:min(260px,calc(100vw - 24px));max-width:none;z-index:15;display:none}
+.calc-wrap{left:50%;top:50%;z-index:15;display:none}
 .calc-wrap.open{display:block}
+.window-wrap.calc-wrap{width:min(260px,calc(100vw - 24px));max-width:none}
+@media(orientation:landscape){.window-wrap.calc-wrap{width:min(420px,calc(100vw - 24px));max-width:none}}
 .calc-wrap .window{width:100%}
 .calc-body{padding:8px;background:#ece9d8;width:100%;box-sizing:border-box}
 .calc-display{
@@ -61,6 +63,20 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
 .calc-btn{min-width:0!important;width:100%!important;height:26px!important;min-height:0!important;padding:0!important;font-size:11px!important;box-sizing:border-box}
 .calc-row1-start{grid-column:2/5}
 .calc-mem{font-weight:bold}
+
+/* Portrait = Standard calculator (compact, matches the reference photo).
+   Landscape = Scientific, matching the real XP scientific-mode screenshot -
+   there's enough width in landscape to fit the extra columns properly. */
+.calc-scientific{display:none}
+@media(orientation:landscape){
+  .calc-standard{display:none}
+  .calc-scientific{display:block}
+}
+.calc-sci-row{display:flex;align-items:center;flex-wrap:wrap;gap:2px 10px;font-size:11px;margin-bottom:4px}
+.calc-sci-gap{flex:0 0 8px}
+.calc-sci-narrow{flex:1}
+.calc-sci-grid{display:grid;grid-template-columns:repeat(11,1fr);gap:2px}
+.calc-sci-grid .calc-btn{font-size:10px!important}
 .title-bar-text{display:flex;align-items:center;gap:5px}
 .title-bar-text img{width:16px;height:16px}
 
@@ -336,6 +352,8 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
     <div class="menubar"><span>Правка</span><span>Вид</span><span>Справка</span></div>
     <div class="calc-body">
       <div class="calc-display" id="calcDisplay"><span id="calcNum">0</span></div>
+
+      <div class="calc-standard">
       <div class="calc-grid">
         <div class="calc-mem-box" id="calcMemBox"></div>
         <button class="calc-btn calc-row1-start" type="button" data-act="backspace">Backspace</button>
@@ -369,6 +387,89 @@ body{background:#5ba3d9 url('https://en.wikipedia.org/wiki/Special:FilePath/Blis
         <button class="calc-btn" type="button" data-act="dot">.</button>
         <button class="calc-btn" type="button" data-op="+">+</button>
         <button class="calc-btn calc-equals" type="button" data-act="equals">=</button>
+      </div>
+      </div>
+
+      <div class="calc-scientific">
+        <div class="calc-sci-row">
+          <span><input type="radio" name="calcBase" value="hex" id="baseHex"><label for="baseHex">Hex</label></span>
+          <span><input type="radio" name="calcBase" value="dec" id="baseDec" checked><label for="baseDec">Dec</label></span>
+          <span><input type="radio" name="calcBase" value="oct" id="baseOct"><label for="baseOct">Oct</label></span>
+          <span><input type="radio" name="calcBase" value="bin" id="baseBin"><label for="baseBin">Bin</label></span>
+          <span class="calc-sci-gap"></span>
+          <span><input type="radio" name="calcAngle" value="deg" id="angDeg" checked><label for="angDeg">Градусы</label></span>
+          <span><input type="radio" name="calcAngle" value="rad" id="angRad"><label for="angRad">Радианы</label></span>
+          <span><input type="radio" name="calcAngle" value="grad" id="angGrad"><label for="angGrad">Грады</label></span>
+        </div>
+        <div class="calc-sci-row">
+          <span><input type="checkbox" id="calcInv"><label for="calcInv">Inv</label></span>
+          <span><input type="checkbox" id="calcHyp"><label for="calcHyp">Hyp</label></span>
+          <div class="calc-mem-box" id="calcMemBoxSci" style="margin-left:auto"></div>
+          <button class="calc-btn calc-sci-narrow" type="button" data-act="backspace">Backspace</button>
+          <button class="calc-btn calc-sci-narrow" type="button" data-act="ce">CE</button>
+          <button class="calc-btn calc-sci-narrow" type="button" data-act="c">C</button>
+        </div>
+        <div class="calc-sci-grid">
+          <button class="calc-btn" type="button" data-act="sta">Sta</button>
+          <button class="calc-btn" type="button" data-act="fe">F-E</button>
+          <button class="calc-btn" type="button" data-act="lparen">(</button>
+          <button class="calc-btn" type="button" data-act="rparen">)</button>
+          <button class="calc-btn calc-mem" type="button" data-act="mc">MC</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="7">7</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="8">8</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="9">9</button>
+          <button class="calc-btn" type="button" data-op="/">/</button>
+          <button class="calc-btn" type="button" data-act="mod">Mod</button>
+          <button class="calc-btn" type="button" data-act="and">And</button>
+
+          <button class="calc-btn" type="button" data-act="ave">Ave</button>
+          <button class="calc-btn" type="button" data-act="dms">dms</button>
+          <button class="calc-btn" type="button" data-act="exp">Exp</button>
+          <button class="calc-btn" type="button" data-act="ln">ln</button>
+          <button class="calc-btn calc-mem" type="button" data-act="mr">MR</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="4">4</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="5">5</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="6">6</button>
+          <button class="calc-btn" type="button" data-op="*">*</button>
+          <button class="calc-btn" type="button" data-act="or">Or</button>
+          <button class="calc-btn" type="button" data-act="xor">Xor</button>
+
+          <button class="calc-btn" type="button" data-act="sum">Sum</button>
+          <button class="calc-btn" type="button" data-act="sin">sin</button>
+          <button class="calc-btn" type="button" data-act="powy">x^y</button>
+          <button class="calc-btn" type="button" data-act="log">log</button>
+          <button class="calc-btn calc-mem" type="button" data-act="ms">MS</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="1">1</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="2">2</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="3">3</button>
+          <button class="calc-btn" type="button" data-op="-">-</button>
+          <button class="calc-btn" type="button" data-act="lsh">Lsh</button>
+          <button class="calc-btn" type="button" data-act="not">Not</button>
+
+          <button class="calc-btn" type="button" data-act="s">s</button>
+          <button class="calc-btn" type="button" data-act="cos">cos</button>
+          <button class="calc-btn" type="button" data-act="cube">x^3</button>
+          <button class="calc-btn" type="button" data-act="fact">n!</button>
+          <button class="calc-btn calc-mem" type="button" data-act="mplus">M+</button>
+          <button class="calc-btn calc-hexd" type="button" data-num="0">0</button>
+          <button class="calc-btn" type="button" data-act="sign">+/-</button>
+          <button class="calc-btn" type="button" data-act="dot">.</button>
+          <button class="calc-btn" type="button" data-op="+">+</button>
+          <button class="calc-btn calc-equals" type="button" data-act="equals">=</button>
+          <button class="calc-btn" type="button" data-act="intpart">Int</button>
+
+          <button class="calc-btn" type="button" data-act="dat">Dat</button>
+          <button class="calc-btn" type="button" data-act="tan">tg</button>
+          <button class="calc-btn" type="button" data-act="square">x^2</button>
+          <button class="calc-btn" type="button" data-act="reciprocal">1/x</button>
+          <span></span>
+          <button class="calc-btn calc-hexd" type="button" data-hex="A">A</button>
+          <button class="calc-btn calc-hexd" type="button" data-hex="B">B</button>
+          <button class="calc-btn calc-hexd" type="button" data-hex="C">C</button>
+          <button class="calc-btn calc-hexd" type="button" data-hex="D">D</button>
+          <button class="calc-btn calc-hexd" type="button" data-hex="E">E</button>
+          <button class="calc-btn calc-hexd" type="button" data-hex="F">F</button>
+        </div>
       </div>
     </div>
   </div>
@@ -627,24 +728,49 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('startMenu').clas
 document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEventListener('error',()=>{img.style.visibility='hidden'},{once:true})});
 
 // --- Calculator: a real, working app (not decorative like the rest) ------
+// Portrait shows Standard mode; landscape shows Scientific mode (CSS
+// handles which is visible). Both share the same state/display - only the
+// available operations differ.
 (function(){
- const calcWrap=$('calcWrap'),calcDisplay=$('calcDisplay'),calcNum=$('calcNum'),memBox=$('calcMemBox'),calcTitlebar=$('calcTitlebar');
+ const calcWrap=$('calcWrap'),calcDisplay=$('calcDisplay'),calcNum=$('calcNum'),memBox=$('calcMemBox'),memBoxSci=$('calcMemBoxSci'),calcTitlebar=$('calcTitlebar');
  let display='0',stored=null,pendingOp=null,memory=0,resetNext=true,errored=false;
+ let angleMode='deg',invMode=false,hypMode=false,numBase='dec',feMode=false;
 
- function refresh(){calcDisplay.classList.toggle('calc-err',errored);calcNum.textContent=display;memBox.textContent=memory!==0?'M':''}
+ function refresh(){
+  calcDisplay.classList.toggle('calc-err',errored);
+  calcNum.textContent=display;
+  const memText=memory!==0?'M':'';
+  memBox.textContent=memText;
+  if(memBoxSci)memBoxSci.textContent=memText;
+ }
+ function baseRadix(b){return b==='hex'?16:b==='oct'?8:b==='bin'?2:10}
+ function parseInBase(str,base){if(base==='dec')return parseFloat(str);const n=parseInt(str,baseRadix(base));return isNaN(n)?0:n}
+ function formatInBase(num,base){if(base==='dec')return fmt(num);if(!isFinite(num))return null;const i=Math.trunc(num);return (i>>>0).toString(baseRadix(base)).toUpperCase()}
+ function curVal(){return parseInBase(display,numBase)}
  function fmt(n){ // null return = "not a real number", caller shows an error instead of NaN/Infinity
   if(!isFinite(n))return null;
+  if(numBase!=='dec')return formatInBase(n,numBase);
+  if(feMode)return n.toExponential(6);
   let s=String(parseFloat(n.toPrecision(12)));
   if(s.length>15)s=n.toExponential(6);
   return s;
  }
  function setError(msg){errored=true;display=msg||'Деление на ноль невозможно';stored=null;pendingOp=null;resetNext=true;refresh()}
  function inputDigit(d){
+  if(numBase==='bin'&&d>'1')return;
+  if(numBase==='oct'&&d>'7')return;
   if(errored||resetNext){display=d;resetNext=false;errored=false}
   else display=display==='0'?d:(display.length<16?display+d:display);
   refresh();
  }
+ function inputHex(h){
+  if(numBase!=='hex')return;
+  if(errored||resetNext){display=h;resetNext=false;errored=false}
+  else display=display==='0'?h:(display.length<16?display+h:display);
+  refresh();
+ }
  function inputDot(){
+  if(numBase!=='dec')return; // real calc disables the decimal point outside Dec mode
   if(errored||resetNext){display='0.';resetNext=false;errored=false;return refresh()}
   if(!display.includes('.'))display+='.';
   refresh();
@@ -657,35 +783,62 @@ document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEvent
   display=display.length>1?display.slice(0,-1):'0';
   refresh();
  }
- function compute(a,op,b){switch(op){case '+':return a+b;case '-':return a-b;case '*':return a*b;case '/':return b===0?NaN:a/b}return b}
+ function compute(a,op,b){
+  switch(op){
+   case '+':return a+b;case '-':return a-b;case '*':return a*b;case '/':return b===0?NaN:a/b;
+   case 'pow':return Math.pow(a,b);
+   case 'and':return (a|0)&(b|0);case 'or':return (a|0)|(b|0);case 'xor':return (a|0)^(b|0);
+   case 'lsh':return (a|0)<<(b|0);case 'mod':return b===0?NaN:(a|0)%(b|0);
+  }
+  return b;
+ }
  function chooseOp(op){
   if(errored)return;
-  const cur=parseFloat(display);
+  const cur=curVal();
   if(stored===null)stored=cur;
   else if(!resetNext){const r=compute(stored,pendingOp,cur),s=fmt(r);if(s===null)return setError();stored=r;display=s}
   pendingOp=op;resetNext=true;refresh();
  }
  function equals(){
   if(errored)return;
-  const cur=parseFloat(display);
+  const cur=curVal();
   if(pendingOp!==null&&stored!==null){const r=compute(stored,pendingOp,cur),s=fmt(r);if(s===null)return setError();display=s;stored=null;pendingOp=null}
   resetNext=true;refresh();
  }
  function unary(fn,errMsg){
   if(errored)return;
-  const s=fmt(fn(parseFloat(display)));
+  const s=fmt(fn(curVal()));
   if(s===null)return setError(errMsg);
   display=s;resetNext=true;refresh();
  }
  function percent(){
   if(errored)return;
-  const cur=parseFloat(display);
+  const cur=curVal();
   const r=(stored!==null&&pendingOp!==null)?stored*(cur/100):cur/100;
   const s=fmt(r);
   if(s===null)return setError();
   display=s;resetNext=true;refresh();
  }
  function sign(){if(errored)return;if(display!=='0')display=display.startsWith('-')?display.slice(1):'-'+display;refresh()}
+ function toRad(v){return angleMode==='deg'?v*Math.PI/180:angleMode==='grad'?v*Math.PI/200:v}
+ function fromRad(v){return angleMode==='deg'?v*180/Math.PI:angleMode==='grad'?v*200/Math.PI:v}
+ function doTrig(kind){
+  if(errored)return;
+  const v=curVal();
+  let r;
+  if(hypMode){
+   if(invMode)r=kind==='sin'?Math.asinh(v):kind==='cos'?Math.acosh(v):Math.atanh(v);
+   else r=kind==='sin'?Math.sinh(v):kind==='cos'?Math.cosh(v):Math.tanh(v);
+  }else{
+   if(invMode){const b=kind==='sin'?Math.asin(v):kind==='cos'?Math.acos(v):Math.atan(v);r=fromRad(b)}
+   else{const rad=toRad(v);r=kind==='sin'?Math.sin(rad):kind==='cos'?Math.cos(rad):Math.tan(rad)}
+  }
+  const s=fmt(r);
+  if(s===null)return setError();
+  display=s;resetNext=true;refresh();
+ }
+ function factorial(n){if(n<0||!Number.isInteger(n))return NaN;if(n>170)return Infinity;let r=1;for(let i=2;i<=n;i++)r*=i;return r}
+ function toggleFE(){if(errored||numBase!=='dec')return;feMode=!feMode;const s=fmt(curVal());if(s!==null){display=s;refresh()}}
 
  const calcTaskItem=$('calcTaskItem');
  $('calcOpen').addEventListener('click',()=>{$('startMenu').classList.remove('open');calcWrap.classList.add('open');calcTaskItem.style.display='';clearAll()});
@@ -698,9 +851,19 @@ document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEvent
  $('calcMaxBtn').addEventListener('click',e=>e.preventDefault());
  calcTaskItem.addEventListener('click',()=>{calcWrap.classList.add('open');calcTaskItem.classList.add('active')});
 
- document.querySelector('.calc-grid').addEventListener('click',e=>{
+ document.querySelectorAll('input[name="calcBase"]').forEach(r=>r.addEventListener('change',()=>{
+  if(errored||!r.checked)return;
+  const v=curVal();numBase=r.value;const s=formatInBase(v,numBase);display=s===null?'0':s;resetNext=true;refresh();
+ }));
+ document.querySelectorAll('input[name="calcAngle"]').forEach(r=>r.addEventListener('change',()=>{if(r.checked)angleMode=r.value}));
+ const invBox=$('calcInv'),hypBox=$('calcHyp');
+ if(invBox)invBox.addEventListener('change',()=>invMode=invBox.checked);
+ if(hypBox)hypBox.addEventListener('change',()=>hypMode=hypBox.checked);
+
+ function handleClick(e){
   const btn=e.target.closest('button');if(!btn)return;
   if(btn.dataset.num!==undefined)return inputDigit(btn.dataset.num);
+  if(btn.dataset.hex)return inputHex(btn.dataset.hex);
   if(btn.dataset.op)return chooseOp(btn.dataset.op);
   switch(btn.dataset.act){
    case 'dot':return inputDot();
@@ -712,12 +875,36 @@ document.querySelectorAll('img').forEach(img=>{img.decoding='async';img.addEvent
    case 'percent':return percent();
    case 'sqrt':return unary(v=>v<0?NaN:Math.sqrt(v),'Введите неотрицательное число');
    case 'reciprocal':return unary(v=>1/v);
+   case 'square':return unary(v=>v*v);
+   case 'cube':return unary(v=>v*v*v);
+   case 'log':return unary(v=>v<=0?NaN:Math.log10(v),'Введите положительное число');
+   case 'ln':return unary(v=>v<=0?NaN:Math.log(v),'Введите положительное число');
+   case 'fact':return unary(v=>factorial(v));
+   case 'not':return unary(v=>~Math.trunc(v));
+   case 'intpart':return unary(v=>Math.trunc(v));
+   case 'sin':return doTrig('sin');
+   case 'cos':return doTrig('cos');
+   case 'tan':return doTrig('tan');
+   case 'powy':return chooseOp('pow');
+   case 'and':return chooseOp('and');
+   case 'or':return chooseOp('or');
+   case 'xor':return chooseOp('xor');
+   case 'lsh':return chooseOp('lsh');
+   case 'mod':return chooseOp('mod');
+   case 'fe':return toggleFE();
    case 'mc':if(errored)return;memory=0;refresh();return;
-   case 'mr':if(errored)return;display=fmt(memory)||'0';resetNext=true;refresh();return;
-   case 'ms':if(errored)return;memory=parseFloat(display);resetNext=true;refresh();return;
-   case 'mplus':if(errored)return;memory+=parseFloat(display);resetNext=true;refresh();return;
+   case 'mr':if(errored)return;{const s=fmt(memory);display=s===null?'0':s}resetNext=true;refresh();return;
+   case 'ms':if(errored)return;memory=curVal();resetNext=true;refresh();return;
+   case 'mplus':if(errored)return;memory+=curVal();resetNext=true;refresh();return;
+   // Sta/Ave/Sum/Dat (statistics list), dms, Exp and ( )  are shown for
+   // visual accuracy but intentionally not wired up - they'd need a whole
+   // separate "list of entered numbers" or expression-stack feature well
+   // beyond what a poll-app calculator needs. Everything else on this
+   // grid is fully working.
   }
- });
+ }
+ document.querySelector('.calc-grid').addEventListener('click',handleClick);
+ document.querySelector('.calc-sci-grid').addEventListener('click',handleClick);
 
  // Own lightweight drag - same technique as the main window, but no
  // vote-gating: this is a standalone bonus app, not part of the poll's
